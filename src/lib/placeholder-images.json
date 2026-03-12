@@ -1,3 +1,52 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-running",
+      "description": "Uma pessoa correndo em uma trilha ao pôr do sol, representando um estilo de vida ativo e saudável.",
+      "imageUrl": "https://picsum.photos/seed/running/1200/600",
+      "imageHint": "running sunset"
+    },
+    {
+      "id": "avatar-1",
+      "description": "Avatar de usuário 1",
+      "imageUrl": "https://picsum.photos/seed/avatar1/100/100",
+      "imageHint": "person portrait"
+    },
+    {
+      "id": "avatar-2",
+      "description": "Avatar de usuário 2",
+      "imageUrl": "https://picsum.photos/seed/avatar2/100/100",
+      "imageHint": "person portrait"
+    },
+    {
+      "id": "avatar-3",
+      "description": "Avatar de usuário 3",
+      "imageUrl": "https://picsum.photos/seed/avatar3/100/100",
+      "imageHint": "person portrait"
+    },
+    {
+      "id": "avatar-4",
+      "description": "Avatar de usuário 4",
+      "imageUrl": "https://picsum.photos/seed/avatar4/100/100",
+      "imageHint": "person portrait"
+    },
+    {
+      "id": "group-logo-1",
+      "description": "Logo do grupo 'Foco na Trilha'",
+      "imageUrl": "https://picsum.photos/seed/group1/200/200",
+      "imageHint": "mountain trail"
+    },
+    {
+      "id": "group-logo-2",
+      "description": "Logo do grupo 'Guerreiros da Academia'",
+      "imageUrl": "https://picsum.photos/seed/group2/200/200",
+      "imageHint": "gym workout"
+    },
+    {
+      "id": "group-logo-3",
+      "description": "Logo do grupo 'Hidratação é Vida'",
+      "imageUrl": "https://picsum.photos/seed/group3/200/200",
+      "imageHint": "water glass"
+    }
+  ]
 }
