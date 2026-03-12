@@ -32,20 +32,45 @@ export const habits: Habit[] = [
   { id: 'habit-2', name: 'Correr 30 minutos', icon: 'Flame', frequency: 'daily', completedToday: false },
   { id: 'habit-3', name: 'Ler 10 páginas', icon: 'Book', frequency: 'daily', completedToday: false },
   { id: 'habit-4', name: 'Meditar 5 minutos', icon: 'HeartPulse', frequency: 'daily', completedToday: true },
-];
+  { id: 'habit-5', name: 'Acordar cedo', icon: 'Sunrise', frequency: 'daily', completedToday: false },
+  { id: 'habit-6', name: 'Alongar', icon: 'Sprout', frequency: 'daily', completedToday: false },
 
-export const habitIdeas: HabitIdea[] = [
-    { name: 'Acordar com o sol', icon: 'Sunrise' },
-    { name: 'Alongamento matinal', icon: 'Sprout' },
-    { name: 'Tocar violão por 15 min', icon: 'Guitar' },
-    { name: 'Estudar algo novo', icon: 'BrainCircuit' },
 ];
 
 export const activityFeed: Activity[] = [
-    { id: 'act-1', user: users[0], text: 'completou o hábito "Correr 30 minutos".', timestamp: new Date(Date.now() - 1000 * 60 * 15) },
-    { id: 'act-2', user: users[2], text: 'iniciou um novo hábito: "Meditar 5 minutos".', timestamp: new Date(Date.now() - 1000 * 60 * 58) },
-    { id: 'act-3', user: users[1], text: 'atingiu uma sequência de 7 dias!', timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2) },
-    { id: 'act-4', user: users[3], text: 'completou o desafio "Corrida de 5km"!', timestamp: new Date(Date.now() - 1000 * 60 * 60 * 4) },
+    {
+        id: 'act-1',
+        user: users[0],
+        habitName: 'Correr 30 minutos',
+        text: 'Mantendo o foco no desafio da semana! 🏃‍♀️ #corrida #saude',
+        timestamp: new Date(Date.now() - 1000 * 60 * 15),
+        imageUrl: placeholderImages.find(p => p.id === 'activity-1')?.imageUrl || '',
+        imageHint: placeholderImages.find(p => p.id === 'activity-1')?.imageHint || '',
+        likes: 23,
+        comments: 5,
+    },
+    {
+        id: 'act-2',
+        user: users[2],
+        habitName: 'Meditar 5 minutos',
+        text: 'Um momento de paz para começar o dia.',
+        timestamp: new Date(Date.now() - 1000 * 60 * 58),
+        imageUrl: placeholderImages.find(p => p.id === 'activity-2')?.imageUrl || '',
+        imageHint: placeholderImages.find(p => p.id === 'activity-2')?.imageHint || '',
+        likes: 42,
+        comments: 11,
+    },
+    {
+        id: 'act-3',
+        user: users[1],
+        habitName: 'Ler 10 páginas',
+        text: 'Terminei mais um capítulo incrível! Recomendo muito esse livro.',
+        timestamp: new Date(Date.now() - 1000 * 60 * 60 * 3),
+        imageUrl: placeholderImages.find(p => p.id === 'activity-3')?.imageUrl || '',
+        imageHint: placeholderImages.find(p => p.id === 'activity-3')?.imageHint || '',
+        likes: 15,
+        comments: 3,
+    },
 ];
 
 export const groups: Group[] = [

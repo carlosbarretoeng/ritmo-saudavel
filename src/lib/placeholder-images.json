@@ -59,6 +59,24 @@
       "description": "Logo do grupo 'Hidratação é Vida'",
       "imageUrl": "https://picsum.photos/seed/group3/200/200",
       "imageHint": "water glass"
+    },
+    {
+      "id": "activity-1",
+      "description": "Pessoa correndo em um parque.",
+      "imageUrl": "https://picsum.photos/seed/activity1/600/800",
+      "imageHint": "person running park"
+    },
+    {
+      "id": "activity-2",
+      "description": "Pessoa meditando com um por do sol ao fundo.",
+      "imageUrl": "https://picsum.photos/seed/activity2/600/800",
+      "imageHint": "person meditating sunset"
+    },
+    {
+      "id": "activity-3",
+      "description": "Pessoa lendo um livro em um café.",
+      "imageUrl": "https://picsum.photos/seed/activity3/600/800",
+      "imageHint": "person reading cafe"
     }
   ]
 }

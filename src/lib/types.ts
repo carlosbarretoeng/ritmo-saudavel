@@ -64,6 +64,11 @@ export type Activity = {
     user: User;
     text: string;
     timestamp: Date;
+    imageUrl?: string;
+    imageHint?: string;
+    habitName?: string;
+    likes: number;
+    comments: number;
 };
 
 export type HabitIdea = Pick<Habit, 'name' | 'icon'>;
