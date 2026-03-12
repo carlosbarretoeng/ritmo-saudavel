@@ -32,15 +32,12 @@ const iconMap: { [key: string]: React.ElementType } = {
 function HabitItem({ habit }: { habit: Habit }) {
     const Icon = iconMap[habit.icon] || Zap;
     return (
-        <div className="flex items-center gap-4 p-4 rounded-lg bg-card hover:bg-muted/50 transition-colors">
-            <div className={cn("p-2 rounded-full", habit.completedToday ? "bg-primary/20 text-primary" : "bg-muted text-muted-foreground")}>
-                <Icon className="w-6 h-6" />
+        <div className="flex items-center gap-3 p-3 rounded-lg border bg-background hover:bg-muted/50 transition-colors">
+            <div className={cn("p-1.5 rounded-full", habit.completedToday ? "bg-primary/20 text-primary" : "bg-muted text-muted-foreground")}>
+                <Icon className="w-5 h-5" />
             </div>
-            <div className="flex-grow">
-                <p className="font-medium">{habit.name}</p>
-                <p className="text-sm text-muted-foreground">{habit.frequency === 'daily' ? 'Diário' : 'Semanal'}</p>
-            </div>
-            <Checkbox checked={habit.completedToday} className="w-6 h-6" />
+            <p className="flex-grow font-medium text-sm">{habit.name}</p>
+            <Checkbox checked={habit.completedToday} className="w-5 h-5" />
         </div>
     )
 }
@@ -89,94 +86,81 @@ export default function DashboardPage() {
   const progressPercentage = userHabits.length > 0 ? (completedCount / userHabits.length) * 100 : 0;
 
   return (
-    <div className="grid grid-cols-1 gap-8 items-start">
-        {/* Coluna Principal */}
-        <div className="space-y-8">
-            <div>
-                <h1 className="text-3xl font-bold font-headline">Olá, {mainUser.name}!</h1>
-                <p className="text-muted-foreground">Pronto para mais um dia de conquistas?</p>
-            </div>
+    <div className="space-y-6">
+        <div>
+            <h1 className="text-2xl font-bold font-headline">Olá, {mainUser.name}!</h1>
+            <p className="text-muted-foreground text-sm">Pronto para mais um dia?</p>
+        </div>
 
-            <Card className="overflow-hidden">
-                <CardContent className="p-4 flex items-center justify-around">
-                    <div className="text-center">
+        <Card>
+            <CardContent className="p-4 flex items-center justify-around">
+                <div className="text-center">
+                    <div className="flex items-center justify-center gap-1 text-muted-foreground mb-1">
+                        <Star className="w-4 h-4" />
+                        <span className="text-xs font-medium">Pontos</span>
+                    </div>
+                    <p className="text-xl font-bold">{mainUser.points.toLocaleString()}</p>
+                </div>
+                <div className="h-8 border-l border-border"></div>
+                <div className="text-center">
                         <div className="flex items-center justify-center gap-1 text-muted-foreground mb-1">
-                            <Star className="w-4 h-4" />
-                            <span className="text-sm font-medium">Pontos</span>
-                        </div>
-                        <p className="text-2xl font-bold">{mainUser.points.toLocaleString()}</p>
+                        <Flame className="w-4 h-4" />
+                        <span className="text-xs font-medium">Sequência</span>
                     </div>
-                    <div className="h-10 border-l border-border"></div>
-                    <div className="text-center">
-                         <div className="flex items-center justify-center gap-1 text-muted-foreground mb-1">
-                            <Flame className="w-4 h-4" />
-                            <span className="text-sm font-medium">Sequência</span>
-                        </div>
-                        <p className="text-2xl font-bold">{mainUser.currentStreak} dias</p>
-                    </div>
-                </CardContent>
-                <div className="bg-primary text-primary-foreground p-3">
-                    <div className="flex items-center justify-center gap-1 text-primary-foreground/80 mb-1">
-                        <Zap className="w-4 h-4" />
-                        <span className="text-sm font-medium">Desafio do Grupo</span>
-                    </div>
-                    <p className="text-center font-bold text-lg">Corrida de 5km</p>
+                    <p className="text-xl font-bold">{mainUser.currentStreak} dias</p>
                 </div>
-            </Card>
+            </CardContent>
+            <div className="bg-primary text-primary-foreground p-3">
+                <p className="text-center font-semibold text-sm">🔥 Desafio: Corrida de 5km</p>
+            </div>
+        </Card>
 
-            <Card>
-                <CardHeader>
-                <div className="flex items-center justify-between">
-                    <div>
-                    <CardTitle>Hábitos de Hoje</CardTitle>
-                    <CardDescription>
-                        Você completou {completedCount} de {userHabits.length} hábitos.
-                    </CardDescription>
+        <Card>
+            <CardHeader className="flex-row items-center justify-between p-4">
+                <CardTitle className="text-lg font-bold">Hábitos de Hoje</CardTitle>
+                <Button variant="ghost" size="icon" className="h-8 w-8">
+                    <Plus className="h-4 w-4" />
+                    <span className="sr-only">Novo Hábito</span>
+                </Button>
+            </CardHeader>
+            <CardContent className="px-4 pb-4 pt-0">
+                <div className="space-y-1 mb-4">
+                    <div className="flex justify-between items-center text-sm text-muted-foreground">
+                        <span>Progresso do dia</span>
+                        <span>{completedCount}/{userHabits.length}</span>
                     </div>
-                    <Button variant="outline">
-                        <Plus className="mr-2 h-4 w-4" />
-                        Novo Hábito
-                    </Button>
+                    <Progress value={progressPercentage} className="h-2" />
                 </div>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                    <div>
-                        <Progress value={progressPercentage} className="w-full h-3" />
-                    </div>
-                    <div className="grid gap-4 grid-cols-1">
-                        {userHabits.map(habit => (
-                            <HabitItem key={habit.id} habit={habit} />
-                        ))}
-                    </div>
-                </CardContent>
-            </Card>
-        </div>
+                <div className="space-y-2">
+                    {userHabits.map(habit => (
+                        <HabitItem key={habit.id} habit={habit} />
+                    ))}
+                </div>
+            </CardContent>
+        </Card>
 
-        {/* Coluna Lateral */}
-        <div className="space-y-8">
-            <Card>
-                <CardHeader className="flex flex-row items-center gap-3">
-                    <ActivityIcon className="w-6 h-6 text-primary" />
-                    <CardTitle>Feed de Atividades</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                    {activityFeed.map(activity => (
-                        <ActivityItem key={activity.id} activity={activity} />
-                    ))}
-                </CardContent>
-            </Card>
-            <Card>
-                <CardHeader className="flex flex-row items-center gap-3">
-                    <Lightbulb className="w-6 h-6 text-primary" />
-                    <CardTitle>Ideias de Hábitos</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                     {habitIdeas.map((idea, index) => (
-                        <HabitIdeaItem key={index} idea={idea} />
-                    ))}
-                </CardContent>
-            </Card>
-        </div>
+        <Card>
+            <CardHeader className="flex flex-row items-center gap-3 p-4">
+                <ActivityIcon className="w-6 h-6 text-primary" />
+                <CardTitle className="text-lg">Feed de Atividades</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4 p-4 pt-0">
+                {activityFeed.map(activity => (
+                    <ActivityItem key={activity.id} activity={activity} />
+                ))}
+            </CardContent>
+        </Card>
+        <Card>
+            <CardHeader className="flex flex-row items-center gap-3 p-4">
+                <Lightbulb className="w-6 h-6 text-primary" />
+                <CardTitle className="text-lg">Ideias de Hábitos</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4 p-4 pt-0">
+                    {habitIdeas.map((idea, index) => (
+                    <HabitIdeaItem key={index} idea={idea} />
+                ))}
+            </CardContent>
+        </Card>
     </div>
   );
 }
