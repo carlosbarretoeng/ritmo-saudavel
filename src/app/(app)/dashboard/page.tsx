@@ -89,15 +89,15 @@ export default function DashboardPage() {
   const progressPercentage = userHabits.length > 0 ? (completedCount / userHabits.length) * 100 : 0;
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+    <div className="grid grid-cols-1 gap-8 items-start">
         {/* Coluna Principal */}
-        <div className="lg:col-span-2 space-y-8">
+        <div className="space-y-8">
             <div>
                 <h1 className="text-3xl font-bold font-headline">Olá, {mainUser.name}!</h1>
                 <p className="text-muted-foreground">Pronto para mais um dia de conquistas?</p>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-3">
+            <div className="grid gap-4 grid-cols-1">
                 <Card>
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
                     <CardTitle className="text-sm font-medium">Pontos Totais</CardTitle>
@@ -149,7 +149,7 @@ export default function DashboardPage() {
                     <div>
                         <Progress value={progressPercentage} className="w-full h-3" />
                     </div>
-                    <div className="grid gap-4 sm:grid-cols-2">
+                    <div className="grid gap-4 grid-cols-1">
                         {userHabits.map(habit => (
                             <HabitItem key={habit.id} habit={habit} />
                         ))}
@@ -159,7 +159,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Coluna Lateral */}
-        <div className="lg:col-span-1 space-y-8">
+        <div className="space-y-8">
             <Card>
                 <CardHeader className="flex flex-row items-center gap-3">
                     <ActivityIcon className="w-6 h-6 text-primary" />

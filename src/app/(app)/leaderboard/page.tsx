@@ -61,7 +61,7 @@ export default function LeaderboardPage() {
                       />
                       <div>
                         <p className="font-bold">{entry.group.name}</p>
-                        <p className="text-sm text-muted-foreground hidden md:block">{entry.group.description}</p>
+                        <p className="text-sm text-muted-foreground">{entry.group.description}</p>
                       </div>
                     </div>
                   </TableCell>

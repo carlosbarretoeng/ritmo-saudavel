@@ -36,7 +36,7 @@ export default function GroupDetailPage({ params }: { params: { id: string } }) 
   return (
     <div className="space-y-8">
       <Card>
-        <CardHeader className="flex flex-col md:flex-row items-start md:items-center gap-6">
+        <CardHeader className="flex flex-col items-start gap-6">
           <Image
             src={group.iconUrl}
             alt={group.name}

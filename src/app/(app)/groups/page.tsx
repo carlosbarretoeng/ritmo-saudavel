@@ -34,7 +34,7 @@ export default function GroupsPage() {
       <div>
         <h2 className="text-2xl font-bold font-headline mb-4">Meus Grupos</h2>
         {myGroups.length > 0 ? (
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 grid-cols-1">
             {myGroups.map((group) => (
               <Card key={group.id} className="flex flex-col">
                 <CardHeader className="flex-row items-center gap-4">
@@ -71,7 +71,7 @@ export default function GroupsPage() {
 
       <div>
         <h2 className="text-2xl font-bold font-headline mb-4">Descobrir Grupos</h2>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 grid-cols-1">
           {availableGroups.map((group) => (
             <Card key={group.id} className="flex flex-col">
               <CardHeader className="flex-row items-center gap-4">

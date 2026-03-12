@@ -24,13 +24,13 @@ export default function LandingPage() {
       </header>
 
       <main className="flex-grow">
-        <section className="relative py-20 md:py-32 bg-card">
+        <section className="relative py-20 bg-card">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="max-w-3xl mx-auto">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold font-headline tracking-tighter text-foreground">
+              <h1 className="text-4xl font-bold font-headline tracking-tighter text-foreground">
                 Construa Hábitos, Conquiste a Saúde
               </h1>
-              <p className="mt-6 text-lg md:text-xl text-muted-foreground">
+              <p className="mt-6 text-lg text-muted-foreground">
                 Junte-se a amigos, complete desafios e transforme sua rotina com o Ritmo Saudável. Pequenos passos, grandes mudanças.
               </p>
               <div className="mt-8">
@@ -44,7 +44,7 @@ export default function LandingPage() {
 
         {heroImage && (
           <section className="container mx-auto -mt-16 px-4 sm:px-6 lg:px-8">
-              <div className="relative aspect-[16/8] md:aspect-[16/6] w-full overflow-hidden rounded-2xl shadow-2xl">
+              <div className="relative aspect-[16/8] w-full overflow-hidden rounded-2xl shadow-2xl">
                 <Image
                     src={heroImage.imageUrl}
                     alt={heroImage.description}
@@ -58,17 +58,17 @@ export default function LandingPage() {
           </section>
         )}
 
-        <section className="py-20 md:py-32">
+        <section className="py-20">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-2xl mx-auto">
-              <h2 className="text-3xl sm:text-4xl font-bold font-headline text-foreground">
+              <h2 className="text-3xl font-bold font-headline text-foreground">
                 Tudo que você precisa para uma vida mais ativa
               </h2>
               <p className="mt-4 text-lg text-muted-foreground">
                 Nossa plataforma gamificada torna a jornada pela saúde mais divertida e social.
               </p>
             </div>
-            <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="mt-16 grid grid-cols-1 gap-8">
               <Card>
                 <CardHeader>
                   <div className="bg-primary/10 text-primary p-3 rounded-lg w-fit">
