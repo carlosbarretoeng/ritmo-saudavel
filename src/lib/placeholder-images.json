@@ -31,6 +31,18 @@
       "imageHint": "person portrait"
     },
     {
+      "id": "avatar-5",
+      "description": "Avatar de usuário 5",
+      "imageUrl": "https://picsum.photos/seed/avatar5/100/100",
+      "imageHint": "person portrait"
+    },
+    {
+      "id": "avatar-6",
+      "description": "Avatar de usuário 6",
+      "imageUrl": "https://picsum.photos/seed/avatar6/100/100",
+      "imageHint": "person portrait"
+    },
+    {
       "id": "group-logo-1",
       "description": "Logo do grupo 'Foco na Trilha'",
       "imageUrl": "https://picsum.photos/seed/group1/200/200",

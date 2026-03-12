@@ -58,3 +58,12 @@ export type ChatMessage = {
     text: string;
     timestamp: Date;
 };
+
+export type Activity = {
+    id: string;
+    user: User;
+    text: string;
+    timestamp: Date;
+};
+
+export type HabitIdea = Pick<Habit, 'name' | 'icon'>;
