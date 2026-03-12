@@ -95,7 +95,13 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       </Sidebar>
       <SidebarInset>
         <header className="flex items-center justify-between p-4 border-b">
-           <SidebarTrigger />
+           <div className="flex items-center gap-4">
+            <SidebarTrigger />
+            <div>
+              <h1 className="text-lg font-bold font-headline">Olá, {mainUser.name}!</h1>
+              <p className="text-xs text-muted-foreground">Pronto para mais um dia?</p>
+            </div>
+           </div>
            <Link href="/profile">
             <Avatar>
               <AvatarImage src={mainUser.avatarUrl} alt={mainUser.name} />
@@ -103,7 +109,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             </Avatar>
            </Link>
         </header>
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 bg-background/95">
+        <main className="flex-1 p-4 bg-background/95">
             {children}
         </main>
       </SidebarInset>

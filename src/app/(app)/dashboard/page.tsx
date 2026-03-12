@@ -86,20 +86,15 @@ export default function DashboardPage() {
   const progressPercentage = userHabits.length > 0 ? (completedCount / userHabits.length) * 100 : 0;
 
   return (
-    <div className="space-y-6">
-        <div>
-            <h1 className="text-2xl font-bold font-headline">Olá, {mainUser.name}!</h1>
-            <p className="text-muted-foreground text-sm">Pronto para mais um dia?</p>
-        </div>
-
+    <div className="space-y-4">
         <Card>
-            <CardContent className="p-4 flex items-center justify-around">
+            <CardContent className="p-3 flex items-center justify-around">
                 <div className="text-center">
                     <div className="flex items-center justify-center gap-1 text-muted-foreground mb-1">
                         <Star className="w-4 h-4" />
                         <span className="text-xs font-medium">Pontos</span>
                     </div>
-                    <p className="text-xl font-bold">{mainUser.points.toLocaleString()}</p>
+                    <p className="text-lg font-bold">{mainUser.points.toLocaleString()}</p>
                 </div>
                 <div className="h-8 border-l border-border"></div>
                 <div className="text-center">
@@ -107,26 +102,26 @@ export default function DashboardPage() {
                         <Flame className="w-4 h-4" />
                         <span className="text-xs font-medium">Sequência</span>
                     </div>
-                    <p className="text-xl font-bold">{mainUser.currentStreak} dias</p>
+                    <p className="text-lg font-bold">{mainUser.currentStreak} dias</p>
                 </div>
             </CardContent>
-            <div className="bg-primary text-primary-foreground p-3">
-                <p className="text-center font-semibold text-sm">🔥 Desafio: Corrida de 5km</p>
+            <div className="bg-primary text-primary-foreground p-2 rounded-b-lg">
+                <p className="text-center font-semibold text-xs">🔥 Desafio: Corrida de 5km</p>
             </div>
         </Card>
 
         <Card>
             <CardHeader className="flex-row items-center justify-between p-4">
-                <CardTitle className="text-lg font-bold">Hábitos de Hoje</CardTitle>
+                <CardTitle className="text-base font-bold">Hábitos de Hoje</CardTitle>
                 <Button variant="ghost" size="icon" className="h-8 w-8">
                     <Plus className="h-4 w-4" />
                     <span className="sr-only">Novo Hábito</span>
                 </Button>
             </CardHeader>
             <CardContent className="px-4 pb-4 pt-0">
-                <div className="space-y-1 mb-4">
-                    <div className="flex justify-between items-center text-sm text-muted-foreground">
-                        <span>Progresso do dia</span>
+                <div className="space-y-1 mb-3">
+                    <div className="flex justify-between items-center text-xs text-muted-foreground">
+                        <span>Progresso</span>
                         <span>{completedCount}/{userHabits.length}</span>
                     </div>
                     <Progress value={progressPercentage} className="h-2" />
