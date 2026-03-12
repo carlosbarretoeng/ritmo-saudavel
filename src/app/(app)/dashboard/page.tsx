@@ -97,38 +97,32 @@ export default function DashboardPage() {
                 <p className="text-muted-foreground">Pronto para mais um dia de conquistas?</p>
             </div>
 
-            <div className="grid gap-4 grid-cols-1">
-                <Card>
-                <CardHeader className="flex flex-row items-center justify-between pb-2">
-                    <CardTitle className="text-sm font-medium">Pontos Totais</CardTitle>
-                    <Star className="w-4 h-4 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                    <div className="text-2xl font-bold">{mainUser.points.toLocaleString()}</div>
-                    <p className="text-xs text-muted-foreground">+200 nas últimas 24h</p>
+            <Card className="overflow-hidden">
+                <CardContent className="p-4 flex items-center justify-around">
+                    <div className="text-center">
+                        <div className="flex items-center justify-center gap-1 text-muted-foreground mb-1">
+                            <Star className="w-4 h-4" />
+                            <span className="text-sm font-medium">Pontos</span>
+                        </div>
+                        <p className="text-2xl font-bold">{mainUser.points.toLocaleString()}</p>
+                    </div>
+                    <div className="h-10 border-l border-border"></div>
+                    <div className="text-center">
+                         <div className="flex items-center justify-center gap-1 text-muted-foreground mb-1">
+                            <Flame className="w-4 h-4" />
+                            <span className="text-sm font-medium">Sequência</span>
+                        </div>
+                        <p className="text-2xl font-bold">{mainUser.currentStreak} dias</p>
+                    </div>
                 </CardContent>
-                </Card>
-                <Card>
-                <CardHeader className="flex flex-row items-center justify-between pb-2">
-                    <CardTitle className="text-sm font-medium">Sequência Atual</CardTitle>
-                    <Flame className="w-4 h-4 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                    <div className="text-2xl font-bold">{mainUser.currentStreak} dias</div>
-                    <p className="text-xs text-muted-foreground">Sua maior sequência: {mainUser.longestStreak} dias</p>
-                </CardContent>
-                </Card>
-                <Card className="bg-primary text-primary-foreground">
-                <CardHeader className="flex flex-row items-center justify-between pb-2">
-                    <CardTitle className="text-sm font-medium text-primary-foreground/80">Desafio do Grupo</CardTitle>
-                    <Zap className="w-4 h-4 text-primary-foreground/80" />
-                </CardHeader>
-                <CardContent>
-                    <div className="text-2xl font-bold">Corrida de 5km</div>
-                    <p className="text-xs text-primary-foreground/80">Foco na Trilha</p>
-                </CardContent>
-                </Card>
-            </div>
+                <div className="bg-primary text-primary-foreground p-3">
+                    <div className="flex items-center justify-center gap-1 text-primary-foreground/80 mb-1">
+                        <Zap className="w-4 h-4" />
+                        <span className="text-sm font-medium">Desafio do Grupo</span>
+                    </div>
+                    <p className="text-center font-bold text-lg">Corrida de 5km</p>
+                </div>
+            </Card>
 
             <Card>
                 <CardHeader>
