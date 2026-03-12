@@ -36,7 +36,7 @@ export const habits: Habit[] = [
 
 export const habitIdeas: HabitIdea[] = [
     { name: 'Acordar com o sol', icon: 'Sunrise' },
-    { name: 'Alongamento matinal', icon: 'Lotus' },
+    { name: 'Alongamento matinal', icon: 'Sprout' },
     { name: 'Tocar violão por 15 min', icon: 'Guitar' },
     { name: 'Estudar algo novo', icon: 'BrainCircuit' },
 ];

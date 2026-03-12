@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Flame, Star, Zap, Plus, GlassWater, Book, HeartPulse, Activity as ActivityIcon, Lightbulb, PlusCircle, Sunrise, Lotus, Guitar, BrainCircuit } from "lucide-react";
+import { Flame, Star, Zap, Plus, GlassWater, Book, HeartPulse, Activity as ActivityIcon, Lightbulb, PlusCircle, Sunrise, Sprout, Guitar, BrainCircuit } from "lucide-react";
 import { mainUser, habits as allHabits, activityFeed, habitIdeas } from "@/lib/data";
 import { Habit, Activity, HabitIdea } from "@/lib/types";
 import {cn} from "@/lib/utils";
@@ -24,7 +24,7 @@ const iconMap: { [key: string]: React.ElementType } = {
   Book,
   HeartPulse,
   Sunrise,
-  Lotus,
+  Sprout,
   Guitar,
   BrainCircuit,
 };
