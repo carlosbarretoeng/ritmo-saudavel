@@ -1,5 +1,8 @@
+'use client';
+
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { useState } from 'react';
 import {
   Card,
   CardContent,
@@ -13,16 +16,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { groupDetails, groupChatMessages, habits as allHabits } from "@/lib/data";
-import { Send, Users, Trophy, Target, HeartPulse } from "lucide-react";
+import { Send, Users, Trophy, Target, HeartPulse, Share2, ArrowLeft } from "lucide-react";
 import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { Badge } from "@/components/ui/badge";
 import type { Habit } from "@/lib/types";
 import { Progress } from "@/components/ui/progress";
+import { cn } from "@/lib/utils";
 
 
 export default function GroupDetailPage({ params }: { params: { id: string } }) {
   const group = groupDetails.find((g) => g.id === params.id);
+  const [isFlipped, setIsFlipped] = useState(false);
 
   if (!group) {
     notFound();
@@ -32,26 +37,71 @@ export default function GroupDetailPage({ params }: { params: { id: string } }) 
 
   return (
     <div className="space-y-6">
-      <Card className="overflow-hidden">
-        <CardHeader className="flex flex-col items-center text-center p-4">
-          <Image
-            src={group.iconUrl}
-            alt={group.name}
-            width={80}
-            height={80}
-            className="rounded-xl mb-3"
-            data-ai-hint="group logo"
-          />
-          <div className="space-y-1">
-            <CardTitle className="text-2xl font-headline">{group.name}</CardTitle>
-            <CardDescription>{group.description}</CardDescription>
-            <div className="flex justify-center gap-4 text-muted-foreground pt-1 text-sm">
-                <span className="flex items-center gap-1.5"><Users className="w-4 h-4" /> {group.memberCount} membros</span>
-                <span className="flex items-center gap-1.5"><Trophy className="w-4 h-4" /> Rank: #3</span>
+       <div className="[perspective:1000px]">
+        <div
+          className={cn(
+            "relative h-[230px] transition-transform duration-700 [transform-style:preserve-3d]",
+            isFlipped && "[transform:rotateY(180deg)]"
+          )}
+        >
+          {/* Front Face */}
+          <Card className="absolute w-full h-full [backface-visibility:hidden]">
+            <CardHeader className="flex flex-col items-center text-center p-4 relative h-full">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="absolute top-2 right-2 z-10 text-muted-foreground"
+                onClick={() => setIsFlipped(true)}
+                aria-label="Compartilhar grupo com QR Code"
+              >
+                <Share2 className="w-5 h-5" />
+              </Button>
+              <Image
+                src={group.iconUrl}
+                alt={group.name}
+                width={80}
+                height={80}
+                className="rounded-xl mb-3"
+                data-ai-hint="group logo"
+              />
+              <div className="space-y-1">
+                <CardTitle className="text-2xl font-headline">{group.name}</CardTitle>
+                <CardDescription>{group.description}</CardDescription>
+                <div className="flex justify-center gap-4 text-muted-foreground pt-1 text-sm">
+                    <span className="flex items-center gap-1.5"><Users className="w-4 h-4" /> {group.memberCount} membros</span>
+                    <span className="flex items-center gap-1.5"><Trophy className="w-4 h-4" /> Rank: #3</span>
+                </div>
+              </div>
+            </CardHeader>
+          </Card>
+          
+          {/* Back Face */}
+          <Card className="absolute w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)]">
+             <div className="flex flex-col items-center justify-center h-full p-4 text-center relative">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="absolute top-2 right-2 z-10 text-muted-foreground"
+                  onClick={() => setIsFlipped(false)}
+                  aria-label="Voltar para informações do grupo"
+                >
+                  <ArrowLeft className="w-5 h-5" />
+                </Button>
+                <h3 className="font-bold mb-2 text-lg">Entrar no Grupo</h3>
+                <Image
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=128x128&data=${encodeURIComponent(`group-id:${group.id}`)}`}
+                  width={128}
+                  height={128}
+                  alt={`QR Code para o grupo ${group.name}`}
+                  data-ai-hint="qr code"
+                />
+                <p className="mt-3 text-sm text-muted-foreground">
+                  Escaneie para entrar no grupo <span className="font-bold">{group.name}</span>.
+                </p>
             </div>
-          </div>
-        </CardHeader>
-      </Card>
+          </Card>
+        </div>
+      </div>
       
       {group.objective && (
         <Card>
