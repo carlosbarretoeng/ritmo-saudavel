@@ -14,14 +14,16 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { groupDetails, systemHabits as allHabits } from "@/lib/data";
-import { Users, Trophy, Target, Share2, ArrowLeft } from "lucide-react";
+import { Users, Trophy, Target, Share2, ArrowLeft, Plus, MoreVertical, Archive } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import type { Habit } from "@/lib/types";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { Separator } from "@/components/ui/separator";
-
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { GroupGoalModal } from "@/components/group-goal-modal";
+import { habitIcons } from "@/lib/icons";
 
 export default function GroupDetailPage() {
   const params = useParams();
@@ -29,10 +31,14 @@ export default function GroupDetailPage() {
   const group = groupDetails.find((g) => g.id === id);
   const [isFlipped, setIsFlipped] = useState(false);
   const { toast } = useToast();
+  const [isGoalModalOpen, setIsGoalModalOpen] = useState(false);
 
   if (!group) {
     notFound();
   }
+  
+  const activeGoals = group.objectives?.filter(o => o.status === 'active') || [];
+  const archivedGoals = group.objectives?.filter(o => o.status === 'archived') || [];
 
   const handleCopyLink = () => {
     const joinUrl = `${window.location.origin}/groups/join/${group.id}`;
@@ -43,6 +49,16 @@ export default function GroupDetailPage() {
       });
     });
   };
+  
+  const handleSaveGoal = (newGoalData: any) => {
+    console.log("Saving goal", newGoalData);
+    // Here would be the logic to save the goal
+    toast({
+        title: "Meta Criada!",
+        description: `A meta "${newGoalData.title}" foi adicionada ao grupo.`,
+    });
+    setIsGoalModalOpen(false);
+  }
 
   const commonHabits = group.commonHabits?.map(habitId => allHabits.find(h => h.id === habitId)).filter(Boolean) as Habit[];
 
@@ -129,22 +145,55 @@ export default function GroupDetailPage() {
         </div>
       </div>
       
-      {group.objective && (
-        <Card>
-            <CardHeader className="pb-3">
-                <CardTitle className="flex items-center gap-3 text-lg font-headline">
-                    <Target className="w-6 h-6 text-primary" />
-                    <span>{group.objective.title}</span>
-                </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2">
-                <Progress value={group.objective.target > 0 ? (group.objective.current / group.objective.target) * 100 : 0} />
-                 <p className="text-sm text-muted-foreground text-right font-bold">
-                    {group.objective.current} / {group.objective.target} {group.objective.unit}
-                </p>
-            </CardContent>
-        </Card>
-      )}
+       <div className="space-y-4">
+            <div className="flex items-center justify-between">
+                <h2 className="text-lg font-bold font-headline">Metas Ativas</h2>
+                <Button size="sm" onClick={() => setIsGoalModalOpen(true)}>
+                    <Plus className="mr-2 h-4 w-4" /> Nova Meta
+                </Button>
+            </div>
+            {activeGoals.length > 0 ? (
+                activeGoals.map((goal) => {
+                    const habit = allHabits.find(h => h.id === goal.habitId);
+                    const Icon = habit ? habitIcons[habit.icon] || Target : Target;
+                    return (
+                        <Card key={goal.id}>
+                            <CardHeader className="flex flex-row items-center justify-between pb-3">
+                                <CardTitle className="flex items-center gap-3 text-lg font-headline">
+                                    <Icon className="w-6 h-6 text-primary" />
+                                    <span>{goal.title}</span>
+                                </CardTitle>
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <Button variant="ghost" size="icon" className="h-8 w-8">
+                                            <MoreVertical className="w-4 h-4" />
+                                        </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent align="end">
+                                        <DropdownMenuItem onClick={() => alert('Arquivar meta ' + goal.id)}>
+                                            <Archive className="mr-2 h-4 w-4" />
+                                            <span>Arquivar</span>
+                                        </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                            </CardHeader>
+                            <CardContent className="space-y-2">
+                                <Progress value={goal.target > 0 ? (goal.current / goal.target) * 100 : 0} />
+                                <p className="text-sm text-muted-foreground text-right font-bold">
+                                    {goal.current.toLocaleString('pt-BR')} / {goal.target.toLocaleString('pt-BR')} {goal.unit}
+                                </p>
+                            </CardContent>
+                        </Card>
+                    )
+                })
+            ) : (
+                <Card>
+                    <CardContent className="p-6 text-center text-muted-foreground">
+                        Nenhuma meta ativa no momento.
+                    </CardContent>
+                </Card>
+            )}
+        </div>
 
       <Tabs defaultValue="leaderboard" className="w-full">
         <TabsList className="grid w-full grid-cols-2">
@@ -182,13 +231,30 @@ export default function GroupDetailPage() {
                 <CardDescription>Acompanhe as metas concluídas e o progresso do grupo ao longo do tempo.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-                <div className="text-center text-muted-foreground p-8">
-                    <p>Nenhuma meta anterior encontrada.</p>
-                </div>
+               {archivedGoals.length > 0 ? (
+                    archivedGoals.map(goal => (
+                        <div key={goal.id} className="text-muted-foreground p-2 rounded-md bg-muted/50">
+                            <p className="font-medium text-foreground">{goal.title}</p>
+                            {/* In a real app, you'd format the completion date */}
+                            <p className="text-sm">Arquivada</p>
+                        </div>
+                    ))
+                ) : (
+                    <div className="text-center text-muted-foreground p-8">
+                        <p>Nenhuma meta anterior encontrada.</p>
+                    </div>
+                )}
             </CardContent>
           </Card>
         </TabsContent>
       </Tabs>
+      <GroupGoalModal
+        group={group}
+        isOpen={isGoalModalOpen}
+        onClose={() => setIsGoalModalOpen(false)}
+        onSave={handleSaveGoal}
+        existingGoals={activeGoals}
+       />
     </div>
   );
 }

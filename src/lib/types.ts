@@ -24,11 +24,15 @@ export type UserHabitConfig = {
 };
 
 
-export type GroupObjective = {
+export type GroupGoal = {
+  id: string;
+  habitId: string;
   title: string;
+  period: 'monthly' | 'bimonthly' | 'semiannual' | 'annual';
   target: number;
   current: number;
   unit: string;
+  status: 'active' | 'archived';
 };
 
 export type Group = {
@@ -37,7 +41,7 @@ export type Group = {
   description: string;
   memberCount: number;
   iconUrl: string;
-  objective?: GroupObjective;
+  objectives?: GroupGoal[];
   commonHabits?: string[];
 };
 

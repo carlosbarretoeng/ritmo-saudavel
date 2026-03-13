@@ -1,4 +1,4 @@
-import type { User, Habit, Group, AppUser, GroupWithMembers, ChatMessage, Activity, HabitIdea, GroupObjective, Comment, UserHabitConfig } from './types';
+import type { User, Habit, Group, AppUser, GroupWithMembers, ChatMessage, Activity, UserHabitConfig } from './types';
 import { placeholderImages as allPlaceholderImages } from './placeholder-images';
 
 export const placeholderImages = allPlaceholderImages;
@@ -88,7 +88,7 @@ export const activityFeed: Activity[] = [
         imageUrl: placeholderImages.find(p => p.id === 'activity-2')?.imageUrl || '',
         imageHint: placeholderImages.find(p => p.id === 'activity-2')?.imageHint || '',
         likes: 42,
-        likedBy: ['user-1', 'user-3', 'user-5'],
+        likedBy: ['user-1', 'user-3'],
         comments: [
             { id: 'comment-2-1', user: users[0], text: 'Que foto linda!' },
             { id: 'comment-2-2', user: users[3], text: 'Preciso fazer isso também.' },
@@ -115,9 +115,9 @@ export const activityFeed: Activity[] = [
 ];
 
 export const groups: Group[] = [
-  { id: 'group-1', name: 'Foco na Trilha', description: 'Amantes de corrida e caminhada.', memberCount: 12, iconUrl: placeholderImages.find(p => p.id === 'group-logo-1')?.imageUrl || '', objective: { title: 'Meta Mensal de Corrida', target: 100, current: 45, unit: 'km' }, commonHabits: ['habit-2'] },
-  { id: 'group-2', name: 'Guerreiros da Academia', description: 'Desafios de musculação e cardio.', memberCount: 8, iconUrl: placeholderImages.find(p => p.id === 'group-logo-2')?.imageUrl || '', objective: { title: 'Meta de Treinos Mensal', target: 20, current: 12, unit: 'treinos' }, commonHabits: ['habit-2', 'habit-6'] },
-  { id: 'group-3', name: 'Hidratação é Vida', description: 'Grupo para lembrar de beber água.', memberCount: 25, iconUrl: placeholderImages.find(p => p.id === 'group-logo-3')?.imageUrl || '', objective: { title: 'Meta de Hidratação', target: 60, current: 50, unit: 'litros' }, commonHabits: ['habit-1'] },
+  { id: 'group-1', name: 'Foco na Trilha', description: 'Amantes de corrida e caminhada.', memberCount: 12, iconUrl: placeholderImages.find(p => p.id === 'group-logo-1')?.imageUrl || '', objectives: [{id: 'goal-1-1', habitId: 'habit-2', title: 'Meta Mensal de Corrida', period: 'monthly', target: 100, current: 45, unit: 'km', status: 'active'}], commonHabits: ['habit-2'] },
+  { id: 'group-2', name: 'Guerreiros da Academia', description: 'Desafios de musculação e cardio.', memberCount: 8, iconUrl: placeholderImages.find(p => p.id === 'group-logo-2')?.imageUrl || '', objectives: [{id: 'goal-2-1', habitId: 'habit-6', title: 'Meta de Treinos Mensal', period: 'monthly', target: 20, current: 12, unit: 'treinos', status: 'active'}], commonHabits: ['habit-2', 'habit-6'] },
+  { id: 'group-3', name: 'Hidratação é Vida', description: 'Grupo para lembrar de beber água.', memberCount: 25, iconUrl: placeholderImages.find(p => p.id === 'group-logo-3')?.imageUrl || '', objectives: [{id: 'goal-3-1', habitId: 'habit-1', title: 'Meta de Hidratação', period: 'monthly', target: 60, current: 50, unit: 'litros', status: 'active'}], commonHabits: ['habit-1'] },
 ];
 
 export const groupDetails: GroupWithMembers[] = [
