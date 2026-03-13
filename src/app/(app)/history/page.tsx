@@ -42,7 +42,7 @@ export default function HistoryPage() {
       </div>
       
       <Card>
-          <CardContent className="p-0 md:p-4 text-center">
+          <CardContent className="flex justify-center p-2 sm:p-4">
             <Calendar
                 mode="single"
                 selected={date}
@@ -52,7 +52,7 @@ export default function HistoryPage() {
                 modifiersClassNames={{
                     completed: 'bg-primary/20 text-primary-foreground rounded-full',
                 }}
-                className="rounded-md inline-block"
+                className="rounded-md"
             />
           </CardContent>
       </Card>
