@@ -1,3 +1,6 @@
+'use client';
+
+import { useState } from 'react';
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -9,7 +12,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Flame, Star, Heart, MessageCircle } from "lucide-react";
+import { Flame, Star, Heart, MessageCircle, PartyPopper } from "lucide-react";
 import { mainUser, habits as allHabits, activityFeed } from "@/lib/data";
 import { Habit, Activity } from "@/lib/types";
 import { formatDistanceToNow } from 'date-fns';
@@ -80,8 +83,24 @@ function ActivityPost({ activity }: { activity: Activity }) {
 }
 
 export default function DashboardPage() {
+  const [isFreeDay, setIsFreeDay] = useState(false);
   const userHabits = allHabits.filter((h) => mainUser.habits.includes(h.id));
   const pendingHabits = userHabits.filter(h => !h.completedToday);
+
+  if (isFreeDay) {
+    return (
+      <div className="flex flex-col items-center justify-center h-[70dvh] text-center bg-card rounded-lg p-8 space-y-4">
+        <PartyPopper className="w-16 h-16 text-primary" />
+        <h2 className="text-2xl font-bold font-headline">Dia Livre!</h2>
+        <p className="text-muted-foreground max-w-xs mx-auto">
+          Vá aproveitar a vida, mas volte aqui amanhã para continuar sua jornada!
+        </p>
+         <Button onClick={() => setIsFreeDay(false)} variant="outline" className="mt-4">
+            Voltar ao Dashboard
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -103,6 +122,11 @@ export default function DashboardPage() {
                     <p className="text-lg font-bold">{mainUser.currentStreak} dias</p>
                 </div>
             </CardContent>
+            <CardFooter className="p-0 border-t">
+                <Button variant="ghost" className="w-full rounded-t-none text-muted-foreground" onClick={() => setIsFreeDay(true)}>
+                    Tirar um dia livre
+                </Button>
+            </CardFooter>
         </Card>
 
         {pendingHabits.length > 0 && (
