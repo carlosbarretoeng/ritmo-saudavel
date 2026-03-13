@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { groupDetails, groupChatMessages, systemHabits as allHabits } from "@/lib/data";
-import { Send, Users, Trophy, Target, HeartPulse, Share2, ArrowLeft, Copy } from "lucide-react";
+import { Send, Users, Trophy, Target, Share2, ArrowLeft, Copy } from "lucide-react";
 import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { Badge } from "@/components/ui/badge";
@@ -24,6 +24,7 @@ import type { Habit } from "@/lib/types";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
+import { Separator } from "@/components/ui/separator";
 
 
 export default function GroupDetailPage() {
@@ -86,6 +87,18 @@ export default function GroupDetailPage() {
                     <span className="flex items-center gap-1.5"><Trophy className="w-4 h-4" /> Rank: #3</span>
                 </div>
               </div>
+              {commonHabits && commonHabits.length > 0 && (
+                <div className="w-full pt-2 mt-auto">
+                    <Separator className="mb-3" />
+                    <div className="flex flex-wrap justify-center gap-1.5">
+                        {commonHabits.map(habit => (
+                            <Badge key={habit.id} variant="secondary" className="font-normal">
+                                {habit.name}
+                            </Badge>
+                        ))}
+                    </div>
+                </div>
+              )}
             </CardHeader>
           </Card>
           
@@ -139,24 +152,6 @@ export default function GroupDetailPage() {
                  <p className="text-sm text-muted-foreground text-right font-bold">
                     {group.objective.current} / {group.objective.target} {group.objective.unit}
                 </p>
-            </CardContent>
-        </Card>
-      )}
-
-      {commonHabits && commonHabits.length > 0 && (
-        <Card>
-            <CardHeader className="pb-3">
-                <CardTitle className="flex items-center gap-3 text-lg font-headline">
-                    <HeartPulse className="w-6 h-6 text-primary" />
-                    <span>Hábitos em Comum</span>
-                </CardTitle>
-            </CardHeader>
-            <CardContent className="flex flex-wrap gap-2">
-                {commonHabits.map(habit => (
-                    <Badge key={habit.id} variant="secondary" className="text-sm py-1">
-                        {habit.name}
-                    </Badge>
-                ))}
             </CardContent>
         </Card>
       )}
