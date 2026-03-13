@@ -16,22 +16,34 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { groupDetails, groupChatMessages, habits as allHabits } from "@/lib/data";
-import { Send, Users, Trophy, Target, HeartPulse, Share2, ArrowLeft } from "lucide-react";
+import { Send, Users, Trophy, Target, HeartPulse, Share2, ArrowLeft, Copy } from "lucide-react";
 import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { Badge } from "@/components/ui/badge";
 import type { Habit } from "@/lib/types";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
+import { useToast } from "@/hooks/use-toast";
 
 
 export default function GroupDetailPage({ params }: { params: { id: string } }) {
   const group = groupDetails.find((g) => g.id === params.id);
   const [isFlipped, setIsFlipped] = useState(false);
+  const { toast } = useToast();
 
   if (!group) {
     notFound();
   }
+
+  const handleCopyLink = () => {
+    const joinUrl = `${window.location.origin}/groups/join/${group.id}`;
+    navigator.clipboard.writeText(joinUrl).then(() => {
+      toast({
+        title: "Link Copiado!",
+        description: "O link de convite para o grupo foi copiado para sua área de transferência.",
+      });
+    });
+  };
 
   const commonHabits = group.commonHabits?.map(habitId => allHabits.find(h => h.id === habitId)).filter(Boolean) as Habit[];
 
@@ -81,11 +93,20 @@ export default function GroupDetailPage({ params }: { params: { id: string } }) 
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="absolute top-2 right-2 z-10 text-muted-foreground"
+                  className="absolute top-2 left-2 z-10 text-muted-foreground"
                   onClick={() => setIsFlipped(false)}
                   aria-label="Voltar para informações do grupo"
                 >
                   <ArrowLeft className="w-5 h-5" />
+                </Button>
+                 <Button
+                  variant="ghost"
+                  size="icon"
+                  className="absolute top-2 right-2 z-10 text-muted-foreground"
+                  onClick={handleCopyLink}
+                  aria-label="Copiar link de convite"
+                >
+                  <Copy className="w-5 h-5" />
                 </Button>
                 <h3 className="font-bold mb-2 text-lg">Entrar no Grupo</h3>
                 <Image
