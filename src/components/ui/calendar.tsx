@@ -53,11 +53,11 @@ function Calendar({
   const prevMonth = () => setCurrentMonth(subMonths(currentMonth, 1));
 
   const renderHeader = () => (
-    <div className="flex justify-center pt-1 relative items-center">
+    <div className="flex justify-between items-center pt-1">
       <h2 className="text-sm font-medium capitalize">
         {format(currentMonth, "LLLL yyyy", { locale })}
       </h2>
-      <div className="space-x-1 flex items-center absolute right-1">
+      <div className="space-x-1 flex items-center">
         <button onClick={prevMonth} className={cn(buttonVariants({ variant: "outline" }), "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100")}>
           <ChevronLeft className="h-4 w-4" />
           <span className="sr-only">Previous month</span>
@@ -71,17 +71,20 @@ function Calendar({
   );
 
   const renderWeekDays = () => {
+    const dayNames = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'];
     const weekStartDate = startOfWeek(currentMonth, { locale });
     const days = [];
     for (let i = 0; i < 7; i++) {
+      const day = addDays(weekStartDate, i);
       days.push(
-        <div key={i} className="text-muted-foreground rounded-md w-9 font-normal text-[0.8rem] text-center capitalize">
-          {format(addDays(weekStartDate, i), "EEE", { locale })}
+        <div key={i} className="text-muted-foreground font-normal text-[0.8rem] text-center">
+          {dayNames[day.getDay()]}
         </div>
       );
     }
-    return <div className="flex mt-4">{days}</div>;
+    return <div className="grid grid-cols-7 mt-4">{days}</div>;
   };
+  
 
   const renderCells = () => {
     const monthStart = startOfMonth(currentMonth);
@@ -89,70 +92,66 @@ function Calendar({
     const startDate = startOfWeek(monthStart, { locale });
     const endDate = endOfWeek(monthEnd, { locale });
 
-    const rows = [];
-    let days = [];
+    const days = [];
     let day = startDate;
 
     while (day <= endDate) {
-      for (let i = 0; i < 7; i++) {
-        const cloneDay = day;
-        const isOutsideMonth = !isSameMonth(cloneDay, monthStart);
-
-        if (isOutsideMonth && !showOutsideDays) {
-          days.push(<div key={day.toString()} className="w-9 h-9" />);
-        } else {
-          const isSelected = selected ? isSameDay(cloneDay, selected) : false;
-          
-          let modifierClasses = '';
-          if (modifiers && modifiersClassNames) {
-            for (const key in modifiers) {
-              const modifierDateOrDates = modifiers[key];
-              if (modifierDateOrDates) {
-                const isModified = Array.isArray(modifierDateOrDates)
-                  ? modifierDateOrDates.some(d => isSameDay(cloneDay, d))
-                  : isSameDay(cloneDay, modifierDateOrDates);
-                
-                if (isModified && !isSelected) {
-                  modifierClasses = cn(modifierClasses, modifiersClassNames[key]);
-                }
-              }
-            }
-          }
-
-          days.push(
-            <div
-              key={day.toString()}
-              className="h-9 w-9 text-center text-sm p-0 relative"
-            >
-              <button
-                onClick={() => onSelect(cloneDay)}
-                className={cn(
-                  buttonVariants({ variant: "ghost" }),
-                  "h-9 w-9 p-0 font-normal",
-                  isOutsideMonth && "text-muted-foreground opacity-50",
-                  isSelected && "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
-                  !isSelected && isSameDay(cloneDay, new Date()) && "bg-accent text-accent-foreground",
-                  !isSelected && !isOutsideMonth && "hover:bg-accent hover:text-accent-foreground",
-                  modifierClasses,
-                  classNames?.day
-                )}
-                disabled={isOutsideMonth && !showOutsideDays}
-              >
-                {format(cloneDay, "d")}
-              </button>
-            </div>
-          );
-        }
+        days.push(day);
         day = addDays(day, 1);
-      }
-      rows.push(
-        <div className="flex w-full mt-2 justify-around" key={day.toString()}>
-          {days}
-        </div>
-      );
-      days = [];
     }
-    return <div>{rows}</div>;
+
+    return (
+        <div className="grid grid-cols-7 mt-2">
+            {days.map(cloneDay => {
+                const isOutsideMonth = !isSameMonth(cloneDay, monthStart);
+                if (isOutsideMonth && !showOutsideDays) {
+                    return <div key={cloneDay.toString()} className="w-9 h-9" />;
+                }
+
+                const isSelected = selected ? isSameDay(cloneDay, selected) : false;
+                
+                let modifierClasses = '';
+                if (modifiers && modifiersClassNames) {
+                    for (const key in modifiers) {
+                        const modifierDateOrDates = modifiers[key];
+                        if (modifierDateOrDates) {
+                            const isModified = Array.isArray(modifierDateOrDates)
+                            ? modifierDateOrDates.some(d => isSameDay(cloneDay, d))
+                            : isSameDay(cloneDay, modifierDateOrDates);
+                            
+                            if (isModified && !isSelected) {
+                                modifierClasses = cn(modifierClasses, modifiersClassNames[key]);
+                            }
+                        }
+                    }
+                }
+
+                return (
+                    <div
+                        key={cloneDay.toString()}
+                        className="h-9 w-9 text-center text-sm p-0 flex items-center justify-center"
+                    >
+                        <button
+                            onClick={() => onSelect(cloneDay)}
+                            className={cn(
+                            buttonVariants({ variant: "ghost" }),
+                            "h-9 w-9 p-0 font-normal",
+                            isOutsideMonth && "text-muted-foreground opacity-50",
+                            isSelected && "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
+                            !isSelected && isSameDay(cloneDay, new Date()) && "bg-accent text-accent-foreground",
+                            !isSelected && !isOutsideMonth && "hover:bg-accent hover:text-accent-foreground",
+                            modifierClasses,
+                            classNames?.day
+                            )}
+                            disabled={isOutsideMonth && !showOutsideDays}
+                        >
+                            {format(cloneDay, "d")}
+                        </button>
+                    </div>
+                );
+            })}
+        </div>
+    );
   };
 
   return (
