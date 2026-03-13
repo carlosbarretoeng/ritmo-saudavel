@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import {
   Card,
   CardContent,
@@ -27,12 +28,12 @@ const iconMap: { [key: string]: React.ElementType } = {
 function PendingHabitCheckin({ habit }: { habit: Habit }) {
     const Icon = iconMap[habit.icon] || Sprout;
     return (
-        <div className="flex flex-col items-center gap-2 flex-shrink-0 w-20">
-            <button className="w-16 h-16 rounded-full border-2 border-dashed border-primary bg-primary/10 flex items-center justify-center text-primary hover:bg-primary/20 transition-colors">
+        <Link href={`/checkin/${habit.id}`} className="flex flex-col items-center gap-2 flex-shrink-0 w-20 no-underline">
+            <div className="w-16 h-16 rounded-full border-2 border-dashed border-primary bg-primary/10 flex items-center justify-center text-primary hover:bg-primary/20 transition-colors">
                 <Icon className="w-8 h-8" />
-            </button>
+            </div>
             <p className="text-xs font-medium text-center text-muted-foreground truncate w-full">{habit.name}</p>
-        </div>
+        </Link>
     );
 }
 
@@ -69,9 +70,6 @@ function ActivityPost({ activity }: { activity: Activity }) {
                 <div className="flex gap-1">
                      <Button variant="ghost" size="icon" className="w-8 h-8 text-muted-foreground hover:text-red-500">
                         <Heart className="w-5 h-5" />
-                    </Button>
-                    <Button variant="ghost" size="icon" className="w-8 h-8 text-muted-foreground">
-                        <MessageCircle className="w-5 h-5" />
                     </Button>
                 </div>
                  <p className="text-xs font-bold px-1">{activity.likes.toLocaleString()} curtidas</p>
