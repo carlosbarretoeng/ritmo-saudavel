@@ -7,14 +7,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -34,23 +26,23 @@ export default function GroupDetailPage({ params }: { params: { id: string } }) 
   }
 
   return (
-    <div className="space-y-8">
-      <Card>
-        <CardHeader className="flex flex-col items-start gap-6">
+    <div className="space-y-6">
+      <Card className="overflow-hidden">
+        <CardHeader className="flex flex-col items-center text-center p-4">
           <Image
             src={group.iconUrl}
             alt={group.name}
-            width={128}
-            height={128}
-            className="rounded-xl"
+            width={80}
+            height={80}
+            className="rounded-xl mb-3"
             data-ai-hint="group logo"
           />
-          <div className="space-y-2">
-            <CardTitle className="text-4xl font-headline">{group.name}</CardTitle>
-            <CardDescription className="text-lg">{group.description}</CardDescription>
-            <div className="flex gap-4 text-muted-foreground">
-                <span className="flex items-center gap-2"><Users className="w-5 h-5" /> {group.memberCount} membros</span>
-                <span className="flex items-center gap-2"><Trophy className="w-5 h-5" /> Ranking: 3º Global</span>
+          <div className="space-y-1">
+            <CardTitle className="text-2xl font-headline">{group.name}</CardTitle>
+            <CardDescription>{group.description}</CardDescription>
+            <div className="flex justify-center gap-4 text-muted-foreground pt-1 text-sm">
+                <span className="flex items-center gap-1.5"><Users className="w-4 h-4" /> {group.memberCount} membros</span>
+                <span className="flex items-center gap-1.5"><Trophy className="w-4 h-4" /> Rank: #3</span>
             </div>
           </div>
         </CardHeader>
@@ -58,80 +50,62 @@ export default function GroupDetailPage({ params }: { params: { id: string } }) 
 
       <Tabs defaultValue="leaderboard" className="w-full">
         <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="leaderboard">Placar do Grupo</TabsTrigger>
+          <TabsTrigger value="leaderboard">Ranking</TabsTrigger>
           <TabsTrigger value="chat">Chat</TabsTrigger>
         </TabsList>
         <TabsContent value="leaderboard">
           <Card>
-            <CardHeader>
-              <CardTitle>Ranking dos Membros</CardTitle>
-              <CardDescription>
-                Veja quem está na liderança esta semana.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="w-[80px]">Rank</TableHead>
-                    <TableHead>Membro</TableHead>
-                    <TableHead className="text-right">Pontos</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
+            <CardContent className="p-4">
+              <div className="space-y-4">
                   {group.members.map((member) => (
-                    <TableRow key={member.user.id}>
-                      <TableCell className="font-medium text-lg">{member.rank}</TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-3">
-                          <Avatar>
-                            <AvatarImage src={member.user.avatarUrl} alt={member.user.name} />
-                            <AvatarFallback>{member.user.name.charAt(0)}</AvatarFallback>
-                          </Avatar>
-                          <span className="font-medium">{member.user.name}</span>
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-right font-mono">{member.points.toLocaleString()}</TableCell>
-                    </TableRow>
+                    <div key={member.user.id} className="flex items-center gap-4">
+                      <div className="font-bold text-lg w-6 text-center text-muted-foreground">{member.rank}</div>
+                      <Avatar>
+                        <AvatarImage src={member.user.avatarUrl} alt={member.user.name} />
+                        <AvatarFallback>{member.user.name.charAt(0)}</AvatarFallback>
+                      </Avatar>
+                      <div className="flex-grow">
+                        <p className="font-medium">{member.user.name}</p>
+                      </div>
+                      <div className="text-sm font-mono text-right">
+                        <span className="font-bold">{member.points.toLocaleString()}</span>
+                        <span className="text-muted-foreground"> pts</span>
+                      </div>
+                    </div>
                   ))}
-                </TableBody>
-              </Table>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>
         <TabsContent value="chat">
-          <Card className="flex flex-col h-[600px]">
-            <CardHeader>
-              <CardTitle>Chat do Grupo</CardTitle>
-              <CardDescription>Converse com os membros do grupo.</CardDescription>
-            </CardHeader>
-            <CardContent className="flex-1 overflow-hidden">
-                <ScrollArea className="h-full pr-4">
+          <Card className="flex flex-col h-[60dvh]">
+            <CardContent className="flex-1 overflow-hidden p-0">
+                <ScrollArea className="h-full p-4">
                      <div className="space-y-6">
                         {groupChatMessages.map(message => (
-                             <div key={message.id} className="flex items-start gap-4">
-                                <Avatar>
+                             <div key={message.id} className="flex items-start gap-3">
+                                <Avatar className="w-8 h-8">
                                     <AvatarImage src={message.userAvatarUrl} />
                                     <AvatarFallback>{message.userName.charAt(0)}</AvatarFallback>
                                 </Avatar>
-                                <div className="flex-1">
-                                    <div className="flex items-center gap-2">
-                                        <span className="font-bold">{message.userName}</span>
-                                        <span className="text-xs text-muted-foreground">
+                                <div className="flex-1 bg-muted rounded-lg p-3">
+                                    <div className="flex items-center justify-between text-xs mb-1">
+                                        <span className="font-bold text-primary">{message.userName}</span>
+                                        <span className="text-muted-foreground">
                                             {formatDistanceToNow(message.timestamp, { addSuffix: true, locale: ptBR })}
                                         </span>
                                     </div>
-                                    <p className="text-muted-foreground">{message.text}</p>
+                                    <p className="text-sm text-foreground/90">{message.text}</p>
                                 </div>
                             </div>
                         ))}
                      </div>
                 </ScrollArea>
             </CardContent>
-            <div className="p-4 border-t">
+            <div className="p-2 border-t bg-background">
                 <div className="relative">
-                    <Input placeholder="Digite sua mensagem..." className="pr-12" />
-                    <Button size="icon" className="absolute top-1/2 right-1 -translate-y-1/2 h-8 w-8">
+                    <Input placeholder="Escreva uma mensagem..." className="pr-10" />
+                    <Button size="icon" className="absolute top-1/2 right-1 -translate-y-1/2 h-8 w-8" variant="ghost">
                         <Send className="h-4 w-4" />
                     </Button>
                 </div>
