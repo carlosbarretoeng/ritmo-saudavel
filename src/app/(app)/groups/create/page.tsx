@@ -19,9 +19,6 @@ export default function CreateGroupPage() {
   const [groupName, setGroupName] = useState('');
   const [groupDescription, setGroupDescription] = useState('');
   const [groupIcon, setGroupIcon] = useState<string | null>(null);
-  const [groupObjectiveTitle, setGroupObjectiveTitle] = useState('');
-  const [groupObjectiveTarget, setGroupObjectiveTarget] = useState('');
-  const [groupObjectiveUnit, setGroupObjectiveUnit] = useState('');
   const [selectedHabits, setSelectedHabits] = useState<string[]>([]);
 
   const userHabits = systemHabits.filter(sh => 
@@ -31,18 +28,10 @@ export default function CreateGroupPage() {
   const handleCreateGroup = () => {
     setIsLoading(true);
     // Logic to create the group would go here
-    const objective = groupObjectiveTitle && groupObjectiveTarget && groupObjectiveUnit ? {
-        title: groupObjectiveTitle,
-        target: parseInt(groupObjectiveTarget, 10),
-        current: 0,
-        unit: groupObjectiveUnit
-    } : undefined;
-
     console.log({
       name: groupName,
       description: groupDescription,
       icon: groupIcon,
-      objective,
       commonHabits: selectedHabits,
     });
     
@@ -111,40 +100,6 @@ export default function CreateGroupPage() {
                 onChange={(e) => setGroupDescription(e.target.value)}
                 rows={3}
                 />
-            </div>
-            
-            <div className="space-y-4 rounded-md border p-4">
-                <Label>Objetivo do Grupo (Opcional)</Label>
-                <div className="space-y-2">
-                    <Label htmlFor="group-objective-title" className="text-xs text-muted-foreground">Título do Objetivo</Label>
-                    <Input
-                        id="group-objective-title"
-                        placeholder="Ex: Correr no mês"
-                        value={groupObjectiveTitle}
-                        onChange={(e) => setGroupObjectiveTitle(e.target.value)}
-                    />
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                        <Label htmlFor="group-objective-target" className="text-xs text-muted-foreground">Meta</Label>
-                        <Input
-                            id="group-objective-target"
-                            type="number"
-                            placeholder="Ex: 100"
-                            value={groupObjectiveTarget}
-                            onChange={(e) => setGroupObjectiveTarget(e.target.value)}
-                        />
-                    </div>
-                    <div className="space-y-2">
-                        <Label htmlFor="group-objective-unit" className="text-xs text-muted-foreground">Unidade</Label>
-                        <Input
-                            id="group-objective-unit"
-                            placeholder="Ex: km"
-                            value={groupObjectiveUnit}
-                            onChange={(e) => setGroupObjectiveUnit(e.target.value)}
-                        />
-                    </div>
-                </div>
             </div>
             
             <div className="space-y-4">
