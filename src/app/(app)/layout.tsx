@@ -9,9 +9,9 @@ import {
   SidebarFooter,
   SidebarInset,
   SidebarTrigger,
+  SidebarSeparator,
 } from "@/components/ui/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import {
   LayoutDashboard,
   Users,
@@ -30,7 +30,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       <Sidebar>
         <SidebarHeader>
           <Link href="/dashboard" className="flex items-center gap-2">
-            <Logo className="w-7 h-7 text-primary" />
+            <Logo className="w-7 h-7 text-sidebar-primary" />
             <span className="text-lg font-semibold font-headline tracking-tighter group-data-[collapsible=icon]:hidden">
               Ritmo Saudável
             </span>
@@ -91,6 +91,17 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
+          <SidebarSeparator className="my-1" />
+           <Link href="/profile" className="flex items-center gap-3 p-2 rounded-md hover:bg-sidebar-accent">
+            <Avatar className="w-9 h-9">
+              <AvatarImage src={mainUser.avatarUrl} alt={mainUser.name} />
+              <AvatarFallback>{mainUser.name.charAt(0)}</AvatarFallback>
+            </Avatar>
+            <div className="flex flex-col group-data-[collapsible=icon]:hidden">
+                <span className="text-sm font-semibold text-sidebar-foreground">{mainUser.name}</span>
+                <span className="text-xs text-sidebar-foreground/70">{mainUser.email}</span>
+            </div>
+          </Link>
         </SidebarFooter>
       </Sidebar>
       <SidebarInset>
@@ -102,12 +113,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               <p className="text-xs text-muted-foreground">Pronto para mais um dia?</p>
             </div>
            </div>
-           <Link href="/profile">
-            <Avatar>
-              <AvatarImage src={mainUser.avatarUrl} alt={mainUser.name} />
-              <AvatarFallback>{mainUser.name.charAt(0)}</AvatarFallback>
-            </Avatar>
-           </Link>
         </header>
         <main className="flex-1 p-4 bg-background/95">
             {children}
