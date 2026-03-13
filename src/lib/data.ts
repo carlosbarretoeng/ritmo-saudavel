@@ -1,4 +1,4 @@
-import type { User, Habit, Group, AppUser, GroupWithMembers, ChatMessage, Activity, HabitIdea } from './types';
+import type { User, Habit, Group, AppUser, GroupWithMembers, ChatMessage, Activity, HabitIdea, GroupObjective } from './types';
 import { placeholderImages as allPlaceholderImages } from './placeholder-images';
 
 export const placeholderImages = allPlaceholderImages;
@@ -74,9 +74,9 @@ export const activityFeed: Activity[] = [
 ];
 
 export const groups: Group[] = [
-  { id: 'group-1', name: 'Foco na Trilha', description: 'Amantes de corrida e caminhada.', memberCount: 12, iconUrl: placeholderImages.find(p => p.id === 'group-logo-1')?.imageUrl || '', objective: 'Correr 100km no mês', commonHabits: ['habit-2'] },
-  { id: 'group-2', name: 'Guerreiros da Academia', description: 'Desafios de musculação e cardio.', memberCount: 8, iconUrl: placeholderImages.find(p => p.id === 'group-logo-2')?.imageUrl || '', objective: 'Treinar 5x por semana', commonHabits: ['habit-2', 'habit-6'] },
-  { id: 'group-3', name: 'Hidratação é Vida', description: 'Grupo para lembrar de beber água.', memberCount: 25, iconUrl: placeholderImages.find(p => p.id === 'group-logo-3')?.imageUrl || '', objective: 'Beber 2L de água todos os dias', commonHabits: ['habit-1'] },
+  { id: 'group-1', name: 'Foco na Trilha', description: 'Amantes de corrida e caminhada.', memberCount: 12, iconUrl: placeholderImages.find(p => p.id === 'group-logo-1')?.imageUrl || '', objective: { title: 'Meta Mensal de Corrida', target: 100, current: 45, unit: 'km' }, commonHabits: ['habit-2'] },
+  { id: 'group-2', name: 'Guerreiros da Academia', description: 'Desafios de musculação e cardio.', memberCount: 8, iconUrl: placeholderImages.find(p => p.id === 'group-logo-2')?.imageUrl || '', objective: { title: 'Meta de Treinos Mensal', target: 20, current: 12, unit: 'treinos' }, commonHabits: ['habit-2', 'habit-6'] },
+  { id: 'group-3', name: 'Hidratação é Vida', description: 'Grupo para lembrar de beber água.', memberCount: 25, iconUrl: placeholderImages.find(p => p.id === 'group-logo-3')?.imageUrl || '', objective: { title: 'Meta de Hidratação', target: 60, current: 50, unit: 'litros' }, commonHabits: ['habit-1'] },
 ];
 
 export const groupDetails: GroupWithMembers[] = [

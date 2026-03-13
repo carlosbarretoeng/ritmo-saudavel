@@ -18,6 +18,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { Badge } from "@/components/ui/badge";
 import type { Habit } from "@/lib/types";
+import { Progress } from "@/components/ui/progress";
 
 
 export default function GroupDetailPage({ params }: { params: { id: string } }) {
@@ -57,11 +58,14 @@ export default function GroupDetailPage({ params }: { params: { id: string } }) 
             <CardHeader className="pb-3">
                 <CardTitle className="flex items-center gap-3 text-lg font-headline">
                     <Target className="w-6 h-6 text-primary" />
-                    <span>Objetivo do Grupo</span>
+                    <span>{group.objective.title}</span>
                 </CardTitle>
             </CardHeader>
-            <CardContent>
-                <p className="text-muted-foreground">{group.objective}</p>
+            <CardContent className="space-y-2">
+                <Progress value={group.objective.target > 0 ? (group.objective.current / group.objective.target) * 100 : 0} />
+                 <p className="text-sm text-muted-foreground text-right font-bold">
+                    {group.objective.current} / {group.objective.target} {group.objective.unit}
+                </p>
             </CardContent>
         </Card>
       )}

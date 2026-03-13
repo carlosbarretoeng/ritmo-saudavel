@@ -10,6 +10,8 @@ import { habits as allHabits } from '@/lib/data';
 import { Habit } from '@/lib/types';
 import { Camera } from 'lucide-react';
 import { habitIcons } from '@/lib/icons';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 export default function CheckinPage() {
   const router = useRouter();
@@ -20,6 +22,9 @@ export default function CheckinPage() {
 
   const [description, setDescription] = useState('');
   const [photo, setPhoto] = useState<string | null>(null);
+  const [checkinValue, setCheckinValue] = useState('');
+  const [checkinUnit, setCheckinUnit] = useState('');
+
 
   if (!habit) {
     notFound();
@@ -33,6 +38,8 @@ export default function CheckinPage() {
       habitId,
       description,
       photo,
+      value: checkinValue,
+      unit: checkinUnit,
     });
     // For now, just mark as completed and navigate back to dashboard
     habit.completedToday = true;
@@ -80,6 +87,33 @@ export default function CheckinPage() {
               rows={3}
               className="text-base"
             />
+          </div>
+
+          <div className="space-y-4">
+            <div className="grid grid-cols-5 gap-2">
+              <div className="col-span-3 space-y-2">
+                  <Label htmlFor="checkin-value">Valor</Label>
+                  <Input 
+                      id="checkin-value"
+                      type="number" 
+                      placeholder="Ex: 5"
+                      value={checkinValue}
+                      onChange={(e) => setCheckinValue(e.target.value)}
+                      className="text-base"
+                  />
+              </div>
+              <div className="col-span-2 space-y-2">
+                  <Label htmlFor="checkin-unit">Unidade</Label>
+                  <Input 
+                      id="checkin-unit"
+                      placeholder="Ex: km" 
+                      value={checkinUnit}
+                      onChange={(e) => setCheckinUnit(e.target.value)}
+                      className="text-base"
+                  />
+              </div>
+            </div>
+            <p className="text-xs text-muted-foreground px-1">Opcional: adicione um valor para acompanhar o progresso em seus grupos.</p>
           </div>
 
           <div className="flex flex-col gap-2">

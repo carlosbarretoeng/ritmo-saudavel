@@ -14,13 +14,20 @@ export type Habit = {
   completedToday: boolean;
 };
 
+export type GroupObjective = {
+  title: string;
+  target: number;
+  current: number;
+  unit: string;
+};
+
 export type Group = {
   id: string;
   name: string;
   description: string;
   memberCount: number;
   iconUrl: string;
-  objective?: string;
+  objective?: GroupObjective;
   commonHabits?: string[];
 };
 
@@ -63,6 +70,8 @@ export type Activity = {
     habitName?: string;
     likes: number;
     comments: number;
+    checkinValue?: number;
+    checkinUnit?: string;
 };
 
 export type HabitIdea = Pick<Habit, 'name' | 'icon'>;
