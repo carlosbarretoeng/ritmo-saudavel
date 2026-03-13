@@ -15,7 +15,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   LayoutDashboard,
   Users,
-  Trophy,
   Sparkles,
   User as UserIcon,
   LogOut,
@@ -52,14 +51,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 <Link href="/groups">
                   <Users />
                   <span>Grupos</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip="Placar">
-                <Link href="/leaderboard">
-                  <Trophy />
-                  <span>Placar</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
