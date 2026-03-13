@@ -164,15 +164,31 @@ export default function DashboardPage() {
             </CardFooter>
         </Card>
 
-        {pendingHabits.length > 0 && (
-          <div className="space-y-3">
-             <h2 className="font-bold text-md px-1">Check-ins de hoje</h2>
-             <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4">
-                {pendingHabits.map(habit => (
-                    <PendingHabitCheckin key={habit.id} habit={habit} />
-                ))}
-            </div>
-          </div>
+        {userHabits.length > 0 && (
+          <>
+            {pendingHabits.length > 0 ? (
+              <div className="space-y-3">
+                <h2 className="font-bold text-md px-1">Check-ins de hoje</h2>
+                <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4">
+                  {pendingHabits.map(habit => (
+                      <PendingHabitCheckin key={habit.id} habit={habit} />
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <Card className="bg-primary/5 border-2 border-dashed border-primary/20">
+                  <CardContent className="p-4 flex items-center gap-4">
+                      <div className="bg-primary/10 p-3 rounded-full">
+                          <PartyPopper className="w-6 h-6 text-primary" />
+                      </div>
+                      <div>
+                          <h3 className="font-bold text-foreground">Parabéns!</h3>
+                          <p className="text-sm text-muted-foreground">Você completou todos os seus hábitos de hoje. Continue assim!</p>
+                      </div>
+                  </CardContent>
+              </Card>
+            )}
+          </>
         )}
         
         <div className="space-y-4">
