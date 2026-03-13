@@ -1,3 +1,5 @@
+'use client';
+
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -6,10 +8,14 @@ import {
 } from "@/components/ui/card";
 import { Plus, Users, ChevronRight, QrCode } from "lucide-react";
 import { groups, mainUser } from "@/lib/data";
+import { useLoading } from "@/contexts/loading-context";
 
 export default function GroupsPage() {
+  const { setIsLoading } = useLoading();
   const myGroups = groups.filter(g => mainUser.groups.includes(g.id));
   const availableGroups = groups.filter(g => !mainUser.groups.includes(g.id));
+
+  const handleNavClick = () => setIsLoading(true);
 
   return (
     <div className="space-y-6">
@@ -17,12 +23,12 @@ export default function GroupsPage() {
         <h1 className="text-2xl font-bold font-headline">Grupos</h1>
         <div className="flex items-center gap-2">
             <Button variant="outline" size="icon" className="h-9 w-9" asChild>
-                <Link href="/groups/scan">
+                <Link href="/groups/scan" onClick={handleNavClick}>
                     <QrCode className="h-4 w-4" />
                 </Link>
             </Button>
             <Button size="sm" asChild>
-              <Link href="/groups/create">
+              <Link href="/groups/create" onClick={handleNavClick}>
                 <Plus className="mr-2 h-4 w-4" />
                 Criar
               </Link>
@@ -39,7 +45,7 @@ export default function GroupsPage() {
         {myGroups.length > 0 ? (
           <div className="space-y-3">
             {myGroups.map((group) => (
-               <Link href={`/groups/${group.id}`} key={group.id} className="block no-underline">
+               <Link href={`/groups/${group.id}`} key={group.id} className="block no-underline" onClick={handleNavClick}>
                  <Card className="p-3 flex items-center gap-4 hover:bg-muted/50 transition-colors">
                     <Image
                         src={group.iconUrl}
