@@ -21,7 +21,7 @@ export const mainUser: AppUser = {
   currentStreak: 12,
   longestStreak: 25,
   achievements: ['Iniciante', '5 Dias de Foco', 'Primeiro Grupo'],
-  habits: ['habit-1', 'habit-2', 'habit-3', 'habit-4'],
+  habits: ['habit-1', 'habit-2', 'habit-3', 'habit-4', 'habit-5', 'habit-6'],
   groups: ['group-1', 'group-2'],
   avatarUrl: placeholderImages.find(p => p.id === 'avatar-2')?.imageUrl || '',
   birthdate: '1994-08-22',
@@ -29,10 +29,10 @@ export const mainUser: AppUser = {
 
 
 export const habits: Habit[] = [
-  { id: 'habit-1', name: 'Beber 2L de água', icon: 'GlassWater', frequency: 'daily', completedToday: true },
+  { id: 'habit-1', name: 'Beber 2L de água', icon: 'GlassWater', frequency: 'daily', completedToday: false },
   { id: 'habit-2', name: 'Correr 30 minutos', icon: 'Flame', frequency: 'daily', completedToday: false },
   { id: 'habit-3', name: 'Ler 10 páginas', icon: 'Book', frequency: 'daily', completedToday: false },
-  { id: 'habit-4', name: 'Meditar 5 minutos', icon: 'HeartPulse', frequency: 'daily', completedToday: true },
+  { id: 'habit-4', name: 'Meditar 5 minutos', icon: 'HeartPulse', frequency: 'daily', completedToday: false },
   { id: 'habit-5', name: 'Acordar cedo', icon: 'Sunrise', frequency: 'daily', completedToday: false },
   { id: 'habit-6', name: 'Alongar', icon: 'Sprout', frequency: 'daily', completedToday: false },
 

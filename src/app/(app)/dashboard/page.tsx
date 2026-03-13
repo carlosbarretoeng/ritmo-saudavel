@@ -24,7 +24,7 @@ import { Input } from '@/components/ui/input';
 function PendingHabitCheckin({ habit }: { habit: Habit }) {
     const Icon = habitIcons[habit.icon] || habitIcons['Sprout'];
     return (
-        <Link href={`/checkin/${habit.id}`} className="flex flex-col items-center gap-2 flex-shrink-0 w-20 no-underline">
+        <Link href={`/checkin/${habit.id}`} className="flex flex-col items-center gap-2 no-underline">
             <div className="w-16 h-16 rounded-full border-2 border-dashed border-primary bg-primary/10 flex items-center justify-center text-primary hover:bg-primary/20 transition-colors">
                 <Icon className="w-8 h-8" />
             </div>
@@ -172,7 +172,7 @@ export default function DashboardPage() {
             {pendingHabits.length > 0 ? (
               <div className="space-y-3">
                 <h2 className="font-bold text-md px-1">Check-ins de hoje</h2>
-                <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4">
+                <div className="grid grid-cols-3 gap-4">
                   {pendingHabits.map(habit => (
                       <PendingHabitCheckin key={habit.id} habit={habit} />
                   ))}
