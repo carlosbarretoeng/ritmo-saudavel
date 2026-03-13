@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Flame, Star, GlassWater, Book, HeartPulse, Sprout, Sunrise, Heart, MessageCircle, Send, MoreHorizontal } from "lucide-react";
+import { Flame, Star, GlassWater, Book, HeartPulse, Sprout, Sunrise, Heart, MessageCircle, Send } from "lucide-react";
 import { mainUser, habits as allHabits, activityFeed } from "@/lib/data";
 import { Habit, Activity } from "@/lib/types";
 import { formatDistanceToNow } from 'date-fns';
@@ -51,9 +51,6 @@ function ActivityPost({ activity }: { activity: Activity }) {
                         {formatDistanceToNow(activity.timestamp, { addSuffix: true, locale: ptBR })}
                     </p>
                 </div>
-                 <Button variant="ghost" size="icon" className="w-8 h-8 -mr-2">
-                    <MoreHorizontal className="w-4 h-4" />
-                </Button>
             </CardHeader>
             {activity.imageUrl && (
                 <CardContent className="p-0">
