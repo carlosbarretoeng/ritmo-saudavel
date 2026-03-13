@@ -11,9 +11,11 @@ import { Label } from '@/components/ui/label';
 import { Camera, ArrowLeft } from 'lucide-react';
 import { habits as allHabits, mainUser } from '@/lib/data';
 import { Checkbox } from '@/components/ui/checkbox';
+import { useLoading } from '@/contexts/loading-context';
 
 export default function CreateGroupPage() {
   const router = useRouter();
+  const { setIsLoading } = useLoading();
   const [groupName, setGroupName] = useState('');
   const [groupDescription, setGroupDescription] = useState('');
   const [groupIcon, setGroupIcon] = useState<string | null>(null);
@@ -25,6 +27,7 @@ export default function CreateGroupPage() {
   const userHabits = allHabits.filter((habit) => mainUser.habits.includes(habit.id));
 
   const handleCreateGroup = () => {
+    setIsLoading(true);
     // Logic to create the group would go here
     const objective = groupObjectiveTitle && groupObjectiveTarget && groupObjectiveUnit ? {
         title: groupObjectiveTitle,
@@ -40,7 +43,11 @@ export default function CreateGroupPage() {
       objective,
       commonHabits: selectedHabits,
     });
-    router.push('/groups');
+    
+    setTimeout(() => {
+      setIsLoading(false);
+      router.push('/groups');
+    }, 1500);
   };
   
   const handleIconUpload = () => {

@@ -10,20 +10,28 @@ import { ArrowLeft } from 'lucide-react';
 import { habitIcons, habitIconNames } from '@/lib/icons';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { cn } from '@/lib/utils';
+import { useLoading } from '@/contexts/loading-context';
 
 export default function CreateHabitPage() {
   const router = useRouter();
+  const { setIsLoading } = useLoading();
   const [habitName, setHabitName] = useState('');
   const [selectedIcon, setSelectedIcon] = useState(habitIconNames[0]);
 
   const handleCreateHabit = () => {
+    setIsLoading(true);
     // Logic to create the habit would go here
     console.log({
       name: habitName,
       icon: selectedIcon,
     });
-    // For now, just navigate back
-    router.push('/habits');
+    
+    // Simulate API call
+    setTimeout(() => {
+      // For now, just navigate back
+      setIsLoading(false);
+      router.push('/habits');
+    }, 1000);
   };
 
   return (

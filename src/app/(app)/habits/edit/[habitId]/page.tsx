@@ -23,11 +23,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { useLoading } from '@/contexts/loading-context';
 
 export default function EditHabitPage() {
   const router = useRouter();
   const params = useParams();
   const habitId = params.habitId as string;
+  const { setIsLoading } = useLoading();
 
   const [habit, setHabit] = useState<Habit | null>(null);
   const [habitName, setHabitName] = useState('');
@@ -45,20 +47,32 @@ export default function EditHabitPage() {
   }, [habitId]);
   
   const handleUpdateHabit = () => {
+    setIsLoading(true);
     // Logic to update the habit would go here
     console.log({
       id: habitId,
       name: habitName,
       icon: selectedIcon,
     });
-    // For now, just navigate back
-    router.push('/habits');
+    
+    // Simulate API call
+    setTimeout(() => {
+      // For now, just navigate back
+      setIsLoading(false);
+      router.push('/habits');
+    }, 1000);
   };
 
   const handleDeleteHabit = () => {
+    setIsLoading(true);
     // Logic to delete the habit would go here
     console.log(`Deleting habit: ${habitId}`);
-    router.push('/habits');
+
+    // Simulate API call
+    setTimeout(() => {
+      setIsLoading(false);
+      router.push('/habits');
+    }, 1000);
   };
   
   if (!habit) {

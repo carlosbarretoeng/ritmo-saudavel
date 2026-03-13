@@ -12,11 +12,13 @@ import { Camera } from 'lucide-react';
 import { habitIcons } from '@/lib/icons';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useLoading } from '@/contexts/loading-context';
 
 export default function CheckinPage() {
   const router = useRouter();
   const params = useParams();
   const habitId = params.habitId as string;
+  const { setIsLoading } = useLoading();
 
   const habit = allHabits.find((h) => h.id === habitId);
 
@@ -33,6 +35,7 @@ export default function CheckinPage() {
   const Icon = habitIcons[habit.icon] || habitIcons['Sprout'];
 
   const handlePublish = () => {
+    setIsLoading(true);
     // Here would be the logic to save the check-in and add it to the feed
     console.log({
       habitId,
@@ -41,9 +44,14 @@ export default function CheckinPage() {
       value: checkinValue,
       unit: checkinUnit,
     });
-    // For now, just mark as completed and navigate back to dashboard
-    habit.completedToday = true;
-    router.push('/dashboard');
+    
+    // Simulate API call
+    setTimeout(() => {
+      // For now, just mark as completed and navigate back to dashboard
+      habit.completedToday = true;
+      setIsLoading(false);
+      router.push('/dashboard');
+    }, 1500);
   };
 
   const handlePhotoUpload = () => {
