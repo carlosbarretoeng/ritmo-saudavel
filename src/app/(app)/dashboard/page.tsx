@@ -20,6 +20,7 @@ import { ptBR } from 'date-fns/locale';
 import { habitIcons } from '@/lib/icons';
 import { Input } from '@/components/ui/input';
 import { useLoading } from '@/contexts/loading-context';
+import { cn } from '@/lib/utils';
 
 
 type PendingHabitCheckinProps = {
@@ -68,10 +69,23 @@ function ActivityPost({ activity }: { activity: Activity }) {
     const [showCommentInput, setShowCommentInput] = useState(false);
     const [showAllComments, setShowAllComments] = useState(false);
     const [isClient, setIsClient] = useState(false);
+    const [isLiked, setIsLiked] = useState(activity.likedBy.includes(mainUser.id));
+    const [likeCount, setLikeCount] = useState(activity.likes);
 
     useEffect(() => {
         setIsClient(true);
     }, []);
+
+    const hasCommented = activity.comments.some(c => c.user.id === mainUser.id);
+
+    const handleLikeClick = () => {
+        if (isLiked) {
+            setLikeCount(likeCount - 1);
+        } else {
+            setLikeCount(likeCount + 1);
+        }
+        setIsLiked(!isLiked);
+    };
 
 
     return (
@@ -104,14 +118,14 @@ function ActivityPost({ activity }: { activity: Activity }) {
             )}
             <CardFooter className="flex-col items-start p-3 gap-2">
                 <div className="flex gap-1">
-                     <Button variant="ghost" size="icon" className="w-8 h-8 text-muted-foreground hover:text-red-500">
-                        <Heart className="w-5 h-5" />
+                     <Button variant="ghost" size="icon" className={cn("w-8 h-8 text-muted-foreground hover:text-red-500", isLiked && "text-red-500")} onClick={handleLikeClick}>
+                        <Heart className={cn("w-5 h-5", isLiked && "fill-current")} />
                     </Button>
-                    <Button variant="ghost" size="icon" className="w-8 h-8 text-muted-foreground" onClick={() => setShowCommentInput(!showCommentInput)}>
-                        <MessageCircle className="w-5 h-5" />
+                    <Button variant="ghost" size="icon" className={cn("w-8 h-8 text-muted-foreground", hasCommented && "text-primary")} onClick={() => setShowCommentInput(!showCommentInput)}>
+                        <MessageCircle className={cn("w-5 h-5", hasCommented && "fill-current")} />
                     </Button>
                 </div>
-                 <p className="text-xs font-bold px-1">{activity.likes.toLocaleString('pt-BR')} curtidas</p>
+                 <p className="text-xs font-bold px-1">{likeCount.toLocaleString('pt-BR')} curtidas</p>
                  <div className="text-sm px-1 space-y-1">
                     <p>
                         <span className="font-bold">{activity.user.name}</span>{' '}

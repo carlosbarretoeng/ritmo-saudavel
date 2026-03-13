@@ -55,6 +55,7 @@ export const activityFeed: Activity[] = [
         imageUrl: placeholderImages.find(p => p.id === 'activity-1')?.imageUrl || '',
         imageHint: placeholderImages.find(p => p.id === 'activity-1')?.imageHint || '',
         likes: 23,
+        likedBy: ['user-2', 'user-3', 'user-4'],
         comments: [
             { id: 'comment-1-1', user: users[1], text: 'Boa, Ana! Continue assim!' },
             { id: 'comment-1-2', user: users[3], text: 'Arrasou! 🔥' },
@@ -72,6 +73,7 @@ export const activityFeed: Activity[] = [
         imageUrl: "https://picsum.photos/seed/activity4/600/800",
         imageHint: "water bottle",
         likes: 5,
+        likedBy: ['user-1'],
         comments: [],
         checkinValue: 1,
         checkinUnit: 'L',
@@ -86,6 +88,7 @@ export const activityFeed: Activity[] = [
         imageUrl: placeholderImages.find(p => p.id === 'activity-2')?.imageUrl || '',
         imageHint: placeholderImages.find(p => p.id === 'activity-2')?.imageHint || '',
         likes: 42,
+        likedBy: ['user-1', 'user-3', 'user-5'],
         comments: [
             { id: 'comment-2-1', user: users[0], text: 'Que foto linda!' },
             { id: 'comment-2-2', user: users[3], text: 'Preciso fazer isso também.' },
@@ -102,6 +105,7 @@ export const activityFeed: Activity[] = [
         imageUrl: placeholderImages.find(p => p.id === 'activity-3')?.imageUrl || '',
         imageHint: placeholderImages.find(p => p.id === 'activity-3')?.imageHint || '',
         likes: 15,
+        likedBy: ['user-2'],
         comments: [
             { id: 'comment-3-1', user: users[2], text: 'Qual o nome do livro?' },
         ],

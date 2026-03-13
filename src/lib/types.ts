@@ -86,6 +86,7 @@ export type Activity = {
     habitId: string;
     habitName?: string;
     likes: number;
+    likedBy: string[];
     comments: Comment[];
     checkinValue?: number;
     checkinUnit?: string;
