@@ -106,7 +106,7 @@ function ActivityPost({ activity }: { activity: Activity }) {
                     <div className="w-full pt-2">
                       <div className="relative">
                           <Input placeholder="Adicione um comentário..." className="pr-10 text-sm" />
-                          <Button size="icon" className="absolute top-1/2 right-1 -translate-y-1/2 h-8 w-8" variant="ghost">
+                          <Button size="icon" className="absolute top-1/2 right-1.5 -translate-y-1/2 h-7 w-7" variant="ghost">
                               <Send className="h-4 w-4" />
                           </Button>
                       </div>
@@ -121,6 +121,7 @@ export default function DashboardPage() {
   const [isFreeDay, setIsFreeDay] = useState(false);
   const userHabits = allHabits.filter((h) => mainUser.habits.includes(h.id));
   const pendingHabits = userHabits.filter(h => !h.completedToday);
+  const hasCompletedHabits = userHabits.length > pendingHabits.length;
 
   if (isFreeDay) {
     return (
@@ -157,14 +158,16 @@ export default function DashboardPage() {
                     <p className="text-lg font-bold">{mainUser.currentStreak} dias</p>
                 </div>
             </CardContent>
-            <CardFooter className="p-0 border-t">
-                <Button variant="ghost" className="w-full rounded-t-none text-muted-foreground" onClick={() => setIsFreeDay(true)}>
-                    Tirar um dia livre
-                </Button>
-            </CardFooter>
+            {!hasCompletedHabits && userHabits.length > 0 && (
+                <CardFooter className="p-0 border-t">
+                    <Button variant="ghost" className="w-full rounded-t-none text-muted-foreground" onClick={() => setIsFreeDay(true)}>
+                        Tirar um dia livre
+                    </Button>
+                </CardFooter>
+            )}
         </Card>
 
-        {userHabits.length > 0 && (
+        {userHabits.length > 0 ? (
           <>
             {pendingHabits.length > 0 ? (
               <div className="space-y-3">
@@ -189,6 +192,15 @@ export default function DashboardPage() {
               </Card>
             )}
           </>
+        ) : (
+           <Card>
+                <CardContent className="p-6 text-center">
+                    <p className="text-muted-foreground">Você ainda não adicionou nenhum hábito.</p>
+                     <Button variant="link" asChild className="mt-2">
+                        <Link href="/habits/create">Crie seu primeiro hábito</Link>
+                    </Button>
+                </CardContent>
+            </Card>
         )}
         
         <div className="space-y-4">
