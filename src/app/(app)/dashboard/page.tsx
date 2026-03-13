@@ -19,12 +19,14 @@ import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { habitIcons } from '@/lib/icons';
 import { Input } from '@/components/ui/input';
+import { useLoading } from '@/contexts/loading-context';
 
 
 function PendingHabitCheckin({ habit }: { habit: Habit }) {
+    const { setIsLoading } = useLoading();
     const Icon = habitIcons[habit.icon] || habitIcons['Sprout'];
     return (
-        <Link href={`/checkin/${habit.id}`} className="flex flex-col items-center gap-2 no-underline">
+        <Link href={`/checkin/${habit.id}`} onClick={() => setIsLoading(true)} className="flex flex-col items-center gap-2 no-underline">
             <div className="w-16 h-16 rounded-full border-2 border-dashed border-primary bg-primary/10 flex items-center justify-center text-primary hover:bg-primary/20 transition-colors">
                 <Icon className="w-8 h-8" />
             </div>
@@ -125,9 +127,12 @@ function ActivityPost({ activity }: { activity: Activity }) {
 
 export default function DashboardPage() {
   const [isFreeDay, setIsFreeDay] = useState(false);
+  const { setIsLoading } = useLoading();
   const userHabits = allHabits.filter((h) => mainUser.habits.includes(h.id));
   const pendingHabits = userHabits.filter(h => !h.completedToday);
   const hasCompletedHabits = userHabits.length > pendingHabits.length;
+  
+  const handleNavClick = () => setIsLoading(true);
 
   if (isFreeDay) {
     return (
@@ -156,7 +161,7 @@ export default function DashboardPage() {
                     <p className="text-lg font-bold">{mainUser.points.toLocaleString('pt-BR')}</p>
                 </div>
                 <div className="h-8 border-l border-border"></div>
-                <Link href="/history" className="block p-2 -m-2 text-center text-current no-underline transition-colors rounded-md hover:bg-muted/50">
+                <Link href="/history" onClick={handleNavClick} className="block p-2 -m-2 text-center text-current no-underline transition-colors rounded-md hover:bg-muted/50">
                     <div className="flex items-center justify-center gap-1 text-muted-foreground mb-1">
                         <Flame className="w-4 h-4" />
                         <span className="text-xs font-medium">Sequência</span>
@@ -203,7 +208,7 @@ export default function DashboardPage() {
                 <CardContent className="p-6 text-center">
                     <p className="text-muted-foreground">Você ainda não adicionou nenhum hábito.</p>
                      <Button variant="link" asChild className="mt-2">
-                        <Link href="/habits/create">Crie seu primeiro hábito</Link>
+                        <Link href="/habits/create" onClick={handleNavClick}>Crie seu primeiro hábito</Link>
                     </Button>
                 </CardContent>
             </Card>
