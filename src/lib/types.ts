@@ -4,6 +4,7 @@ export type User = {
   id: string;
   name: string;
   avatarUrl: string;
+  birthdate?: string;
 };
 
 export type Habit = {
@@ -49,6 +50,7 @@ export type AppUser = User & {
   achievements: string[];
   habits: string[]; // array of habit ids
   groups: string[]; // array of group ids
+  birthdate: string;
 };
 
 export type ChatMessage = {

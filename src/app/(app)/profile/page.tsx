@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { mainUser } from "@/lib/data";
-import { Flame, Star, Trophy } from "lucide-react";
+import { Flame, Star, Trophy, Cake } from "lucide-react";
 
 export default function ProfilePage() {
   return (
@@ -45,12 +45,16 @@ export default function ProfilePage() {
                   <span className="text-muted-foreground flex items-center gap-2"><Trophy className="w-4 h-4 text-yellow-600" /> Maior Sequência</span>
                   <span className="font-bold">{mainUser.longestStreak} dias</span>
               </div>
+               <div className="flex items-center justify-between text-sm">
+                <span className="text-muted-foreground flex items-center gap-2"><Cake className="w-4 h-4 text-pink-500" /> Aniversário</span>
+                <span className="font-bold">{mainUser.birthdate.split('-').reverse().join('/')}</span>
+              </div>
           </CardContent>
         </Card>
         <Card>
             <CardHeader>
                 <CardTitle>Informações Pessoais</CardTitle>
-                <CardDescription>Atualize seu nome e e-mail.</CardDescription>
+                <CardDescription>Atualize seu nome, e-mail e data de nascimento.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
                 <div className="space-y-2">
@@ -60,6 +64,10 @@ export default function ProfilePage() {
                 <div className="space-y-2">
                     <Label htmlFor="email">Email</Label>
                     <Input id="email" type="email" defaultValue={mainUser.email} />
+                </div>
+                <div className="space-y-2">
+                    <Label htmlFor="birthdate">Data de Nascimento</Label>
+                    <Input id="birthdate" type="date" defaultValue={mainUser.birthdate} />
                 </div>
                 <Button>Salvar Alterações</Button>
             </CardContent>

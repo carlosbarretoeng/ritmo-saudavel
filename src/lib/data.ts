@@ -4,13 +4,13 @@ import { placeholderImages as allPlaceholderImages } from './placeholder-images'
 export const placeholderImages = allPlaceholderImages;
 
 export const users: User[] = [
-  { id: 'user-1', name: 'Ana Silva', avatarUrl: placeholderImages.find(p => p.id === 'avatar-1')?.imageUrl || '' },
-  { id: 'user-2', name: 'Bruno Costa', avatarUrl: placeholderImages.find(p => p.id === 'avatar-2')?.imageUrl || '' },
-  { id: 'user-3', name: 'Carla Dias', avatarUrl: placeholderImages.find(p => p.id === 'avatar-3')?.imageUrl || '' },
-  { id: 'user-4', name: 'Daniel Alves', avatarUrl: placeholderImages.find(p => p.id === 'avatar-4')?.imageUrl || '' },
-  { id: 'user-5', name: 'Você', avatarUrl: placeholderImages.find(p => p.id === 'avatar-1')?.imageUrl || '' },
-  { id: 'user-6', name: 'Eduarda Lima', avatarUrl: placeholderImages.find(p => p.id === 'avatar-5')?.imageUrl || '' },
-  { id: 'user-7', name: 'Fábio Melo', avatarUrl: placeholderImages.find(p => p.id === 'avatar-6')?.imageUrl || '' },
+  { id: 'user-1', name: 'Ana Silva', avatarUrl: placeholderImages.find(p => p.id === 'avatar-1')?.imageUrl || '', birthdate: '1990-05-15' },
+  { id: 'user-2', name: 'Bruno Costa', avatarUrl: placeholderImages.find(p => p.id === 'avatar-2')?.imageUrl || '', birthdate: '1988-11-23' },
+  { id: 'user-3', name: 'Carla Dias', avatarUrl: placeholderImages.find(p => p.id === 'avatar-3')?.imageUrl || '', birthdate: '1995-02-10' },
+  { id: 'user-4', name: 'Daniel Alves', avatarUrl: placeholderImages.find(p => p.id === 'avatar-4')?.imageUrl || '', birthdate: '1992-09-01' },
+  { id: 'user-5', name: 'Você', avatarUrl: placeholderImages.find(p => p.id === 'avatar-1')?.imageUrl || '', birthdate: '1994-08-22' },
+  { id: 'user-6', name: 'Eduarda Lima', avatarUrl: placeholderImages.find(p => p.id === 'avatar-5')?.imageUrl || '', birthdate: '1998-03-30' },
+  { id: 'user-7', name: 'Fábio Melo', avatarUrl: placeholderImages.find(p => p.id === 'avatar-6')?.imageUrl || '', birthdate: '1985-12-05' },
 ];
 
 export const mainUser: AppUser = {
@@ -24,6 +24,7 @@ export const mainUser: AppUser = {
   habits: ['habit-1', 'habit-2', 'habit-3', 'habit-4'],
   groups: ['group-1', 'group-2'],
   avatarUrl: placeholderImages.find(p => p.id === 'avatar-2')?.imageUrl || '',
+  birthdate: '1994-08-22',
 };
 
 
