@@ -54,35 +54,31 @@ function Calendar({
 
   const renderHeader = () => (
     <div className="flex justify-between items-center pt-1">
+      <button onClick={prevMonth} className={cn(buttonVariants({ variant: "outline" }), "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100")}>
+        <ChevronLeft className="h-4 w-4" />
+        <span className="sr-only">Previous month</span>
+      </button>
       <h2 className="text-sm font-medium capitalize">
         {format(currentMonth, "LLLL yyyy", { locale })}
       </h2>
-      <div className="space-x-1 flex items-center">
-        <button onClick={prevMonth} className={cn(buttonVariants({ variant: "outline" }), "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100")}>
-          <ChevronLeft className="h-4 w-4" />
-          <span className="sr-only">Previous month</span>
-        </button>
-        <button onClick={nextMonth} className={cn(buttonVariants({ variant: "outline" }), "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100")}>
-          <ChevronRight className="h-4 w-4" />
-          <span className="sr-only">Next month</span>
-        </button>
-      </div>
+      <button onClick={nextMonth} className={cn(buttonVariants({ variant: "outline" }), "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100")}>
+        <ChevronRight className="h-4 w-4" />
+        <span className="sr-only">Next month</span>
+      </button>
     </div>
   );
 
   const renderWeekDays = () => {
     const dayNames = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'];
-    const weekStartDate = startOfWeek(currentMonth, { locale });
-    const days = [];
-    for (let i = 0; i < 7; i++) {
-      const day = addDays(weekStartDate, i);
-      days.push(
-        <div key={i} className="text-muted-foreground font-normal text-[0.8rem] text-center">
-          {dayNames[day.getDay()]}
-        </div>
-      );
-    }
-    return <div className="grid grid-cols-7 mt-4">{days}</div>;
+    return (
+      <div className="grid grid-cols-7 mt-4">
+        {dayNames.map((day, i) => (
+            <div key={i} className="text-muted-foreground font-normal text-[0.8rem] text-center">
+                {day}
+            </div>
+        ))}
+      </div>
+    );
   };
   
 
