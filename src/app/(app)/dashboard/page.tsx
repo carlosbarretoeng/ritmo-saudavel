@@ -9,24 +9,16 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Flame, Star, GlassWater, Book, HeartPulse, Sprout, Sunrise, Heart, MessageCircle } from "lucide-react";
+import { Flame, Star, Heart, MessageCircle } from "lucide-react";
 import { mainUser, habits as allHabits, activityFeed } from "@/lib/data";
 import { Habit, Activity } from "@/lib/types";
 import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { habitIcons } from '@/lib/icons';
 
-const iconMap: { [key: string]: React.ElementType } = {
-  Flame,
-  Star,
-  GlassWater,
-  Book,
-  HeartPulse,
-  Sprout,
-  Sunrise,
-};
 
 function PendingHabitCheckin({ habit }: { habit: Habit }) {
-    const Icon = iconMap[habit.icon] || Sprout;
+    const Icon = habitIcons[habit.icon] || habitIcons['Sprout'];
     return (
         <Link href={`/checkin/${habit.id}`} className="flex flex-col items-center gap-2 flex-shrink-0 w-20 no-underline">
             <div className="w-16 h-16 rounded-full border-2 border-dashed border-primary bg-primary/10 flex items-center justify-center text-primary hover:bg-primary/20 transition-colors">

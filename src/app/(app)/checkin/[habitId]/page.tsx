@@ -8,17 +8,8 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { habits as allHabits } from '@/lib/data';
 import { Habit } from '@/lib/types';
-import { Camera, Flame, Star, GlassWater, Book, HeartPulse, Sprout, Sunrise } from 'lucide-react';
-
-const iconMap: { [key: string]: React.ElementType } = {
-  Flame,
-  Star,
-  GlassWater,
-  Book,
-  HeartPulse,
-  Sprout,
-  Sunrise,
-};
+import { Camera } from 'lucide-react';
+import { habitIcons } from '@/lib/icons';
 
 export default function CheckinPage() {
   const router = useRouter();
@@ -34,7 +25,7 @@ export default function CheckinPage() {
     notFound();
   }
 
-  const Icon = iconMap[habit.icon] || Sprout;
+  const Icon = habitIcons[habit.icon] || habitIcons['Sprout'];
 
   const handlePublish = () => {
     // Here would be the logic to save the check-in and add it to the feed

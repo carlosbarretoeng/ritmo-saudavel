@@ -16,6 +16,7 @@ import {
   LayoutDashboard,
   Users,
   Trophy,
+  Sparkles,
   User as UserIcon,
   LogOut,
   Settings,
@@ -59,6 +60,14 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 <Link href="/leaderboard">
                   <Trophy />
                   <span>Placar</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild tooltip="Hábitos">
+                <Link href="/habits">
+                  <Sparkles />
+                  <span>Hábitos</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
