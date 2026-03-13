@@ -15,9 +15,11 @@ export default function GroupsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold font-headline">Grupos</h1>
-        <Button size="sm">
-          <Plus className="mr-2 h-4 w-4" />
-          Criar
+        <Button size="sm" asChild>
+          <Link href="/groups/create">
+            <Plus className="mr-2 h-4 w-4" />
+            Criar
+          </Link>
         </Button>
       </div>
       
