@@ -68,7 +68,7 @@ export default function LandingPage() {
                 Nossa plataforma gamificada torna a jornada pela saúde mais divertida e social.
               </p>
             </div>
-            <div className="mt-16 grid grid-cols-1 gap-8">
+            <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               <Card>
                 <CardHeader>
                   <div className="bg-primary/10 text-primary p-3 rounded-lg w-fit">
