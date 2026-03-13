@@ -13,12 +13,8 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { groupDetails, groupChatMessages, systemHabits as allHabits } from "@/lib/data";
-import { Send, Users, Trophy, Target, Share2, ArrowLeft, Copy } from "lucide-react";
-import { formatDistanceToNow } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
+import { groupDetails, systemHabits as allHabits } from "@/lib/data";
+import { Users, Trophy, Target, Share2, ArrowLeft } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import type { Habit } from "@/lib/types";
 import { Progress } from "@/components/ui/progress";
@@ -55,7 +51,7 @@ export default function GroupDetailPage() {
        <div className="[perspective:1000px]">
         <div
           className={cn(
-            "relative h-[250px] transition-transform duration-700 [transform-style:preserve-3d]",
+            "relative h-[275px] transition-transform duration-700 [transform-style:preserve-3d]",
             isFlipped && "[transform:rotateY(180deg)]"
           )}
         >
@@ -110,23 +106,15 @@ export default function GroupDetailPage() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="absolute top-2 left-2 z-10 text-muted-foreground"
+                  className="absolute top-2 right-2 z-10 text-muted-foreground"
                   onClick={() => setIsFlipped(false)}
-                  aria-label="Voltar para informações do grupo"
+                  aria-label="Voltar"
                 >
                   <ArrowLeft className="w-5 h-5" />
                 </Button>
-                 <Button
-                  variant="ghost"
-                  size="icon"
-                  className="absolute top-2 right-2 z-10 text-muted-foreground"
-                  onClick={handleCopyLink}
-                  aria-label="Copiar link de convite"
-                >
-                  <Copy className="w-5 h-5" />
-                </Button>
                 <h3 className="font-bold mb-2 text-lg">Entrar no Grupo</h3>
                 <Image
+                  onClick={handleCopyLink}
                   src={`https://api.qrserver.com/v1/create-qr-code/?size=128x128&data=${encodeURIComponent(`group-id:${group.id}`)}`}
                   width={128}
                   height={128}
@@ -134,7 +122,7 @@ export default function GroupDetailPage() {
                   data-ai-hint="qr code"
                 />
                 <p className="mt-3 text-sm text-muted-foreground">
-                  Escaneie para entrar no grupo <span className="font-bold">{group.name}</span>.
+                  Escaneie para entrar no grupo <span className="font-bold">{group.name}</span><br/>ou clique para copiar o link.
                 </p>
             </div>
           </Card>
@@ -161,7 +149,7 @@ export default function GroupDetailPage() {
       <Tabs defaultValue="leaderboard" className="w-full">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="leaderboard">Ranking</TabsTrigger>
-          <TabsTrigger value="chat">Chat</TabsTrigger>
+          <TabsTrigger value="goal-history">Histórico de Metas</TabsTrigger>
         </TabsList>
         <TabsContent value="leaderboard">
           <Card>
@@ -187,39 +175,17 @@ export default function GroupDetailPage() {
             </CardContent>
           </Card>
         </TabsContent>
-        <TabsContent value="chat">
-          <Card className="flex flex-col h-[60dvh]">
-            <CardContent className="flex-1 overflow-hidden p-0">
-                <ScrollArea className="h-full p-4">
-                     <div className="space-y-6">
-                        {groupChatMessages.map(message => (
-                             <div key={message.id} className="flex items-start gap-3">
-                                <Avatar className="w-8 h-8">
-                                    <AvatarImage src={message.userAvatarUrl} />
-                                    <AvatarFallback>{message.userName.charAt(0)}</AvatarFallback>
-                                </Avatar>
-                                <div className="flex-1 bg-muted rounded-lg p-3">
-                                    <div className="flex items-center justify-between text-xs mb-1">
-                                        <span className="font-bold text-primary">{message.userName}</span>
-                                        <span className="text-muted-foreground">
-                                            {formatDistanceToNow(message.timestamp, { addSuffix: true, locale: ptBR })}
-                                        </span>
-                                    </div>
-                                    <p className="text-sm text-foreground/90">{message.text}</p>
-                                </div>
-                            </div>
-                        ))}
-                     </div>
-                </ScrollArea>
-            </CardContent>
-            <div className="p-2 border-t bg-background">
-                <div className="relative">
-                    <Input placeholder="Escreva uma mensagem..." className="pr-10" />
-                    <Button size="icon" className="absolute top-1/2 right-1 -translate-y-1/2 h-8 w-8" variant="ghost">
-                        <Send className="h-4 w-4" />
-                    </Button>
+        <TabsContent value="goal-history">
+           <Card>
+            <CardHeader>
+                <CardTitle>Histórico de Metas</CardTitle>
+                <CardDescription>Acompanhe as metas concluídas e o progresso do grupo ao longo do tempo.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+                <div className="text-center text-muted-foreground p-8">
+                    <p>Nenhuma meta anterior encontrada.</p>
                 </div>
-            </div>
+            </CardContent>
           </Card>
         </TabsContent>
       </Tabs>
