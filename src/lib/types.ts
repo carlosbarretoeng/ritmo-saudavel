@@ -20,6 +20,8 @@ export type Group = {
   description: string;
   memberCount: number;
   iconUrl: string;
+  objective?: string;
+  commonHabits?: string[];
 };
 
 export type GroupMember = {

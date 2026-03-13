@@ -9,12 +9,16 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Camera, ArrowLeft } from 'lucide-react';
+import { habits as allHabits } from '@/lib/data';
+import { Checkbox } from '@/components/ui/checkbox';
 
 export default function CreateGroupPage() {
   const router = useRouter();
   const [groupName, setGroupName] = useState('');
   const [groupDescription, setGroupDescription] = useState('');
   const [groupIcon, setGroupIcon] = useState<string | null>(null);
+  const [groupObjective, setGroupObjective] = useState('');
+  const [selectedHabits, setSelectedHabits] = useState<string[]>([]);
 
   const handleCreateGroup = () => {
     // Logic to create the group would go here
@@ -22,6 +26,8 @@ export default function CreateGroupPage() {
       name: groupName,
       description: groupDescription,
       icon: groupIcon,
+      objective: groupObjective,
+      commonHabits: selectedHabits,
     });
     router.push('/groups');
   };
@@ -30,6 +36,14 @@ export default function CreateGroupPage() {
       // Simulate photo upload
       setGroupIcon('https://picsum.photos/seed/newgroup1/200/200');
   }
+
+  const handleHabitToggle = (habitId: string) => {
+    setSelectedHabits((prev) =>
+      prev.includes(habitId)
+        ? prev.filter((id) => id !== habitId)
+        : [...prev, habitId]
+    );
+  };
 
 
   return (
@@ -78,6 +92,38 @@ export default function CreateGroupPage() {
                 rows={3}
                 />
             </div>
+            
+            <div className="space-y-2">
+                <Label htmlFor="group-objective">Objetivo Tangível (Opcional)</Label>
+                <Input
+                id="group-objective"
+                placeholder="Ex: Correr 100km em um mês"
+                value={groupObjective}
+                onChange={(e) => setGroupObjective(e.target.value)}
+                />
+            </div>
+            
+            <div className="space-y-4">
+                <Label>Hábitos em Comum (Opcional)</Label>
+                <div className="space-y-3 rounded-md border p-4 bg-muted/50">
+                    {allHabits.slice(0, 4).map((habit) => (
+                        <div key={habit.id} className="flex items-center gap-3">
+                            <Checkbox
+                                id={`habit-${habit.id}`}
+                                checked={selectedHabits.includes(habit.id)}
+                                onCheckedChange={() => handleHabitToggle(habit.id)}
+                            />
+                            <Label
+                                htmlFor={`habit-${habit.id}`}
+                                className="font-normal text-sm cursor-pointer"
+                            >
+                                {habit.name}
+                            </Label>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
 
             <div className="flex flex-col gap-2 pt-4">
                 <Button onClick={handleCreateGroup} className="w-full" size="lg">

@@ -74,9 +74,9 @@ export const activityFeed: Activity[] = [
 ];
 
 export const groups: Group[] = [
-  { id: 'group-1', name: 'Foco na Trilha', description: 'Amantes de corrida e caminhada.', memberCount: 12, iconUrl: placeholderImages.find(p => p.id === 'group-logo-1')?.imageUrl || '' },
-  { id: 'group-2', name: 'Guerreiros da Academia', description: 'Desafios de musculação e cardio.', memberCount: 8, iconUrl: placeholderImages.find(p => p.id === 'group-logo-2')?.imageUrl || '' },
-  { id: 'group-3', name: 'Hidratação é Vida', description: 'Grupo para lembrar de beber água.', memberCount: 25, iconUrl: placeholderImages.find(p => p.id === 'group-logo-3')?.imageUrl || '' },
+  { id: 'group-1', name: 'Foco na Trilha', description: 'Amantes de corrida e caminhada.', memberCount: 12, iconUrl: placeholderImages.find(p => p.id === 'group-logo-1')?.imageUrl || '', objective: 'Correr 100km no mês', commonHabits: ['habit-2'] },
+  { id: 'group-2', name: 'Guerreiros da Academia', description: 'Desafios de musculação e cardio.', memberCount: 8, iconUrl: placeholderImages.find(p => p.id === 'group-logo-2')?.imageUrl || '', objective: 'Treinar 5x por semana', commonHabits: ['habit-2', 'habit-6'] },
+  { id: 'group-3', name: 'Hidratação é Vida', description: 'Grupo para lembrar de beber água.', memberCount: 25, iconUrl: placeholderImages.find(p => p.id === 'group-logo-3')?.imageUrl || '', objective: 'Beber 2L de água todos os dias', commonHabits: ['habit-1'] },
 ];
 
 export const groupDetails: GroupWithMembers[] = [
@@ -100,8 +100,8 @@ export const groupChatMessages: ChatMessage[] = [
 
 export const groupLeaderboard: LeaderboardEntry[] = [
   { rank: 1, group: groups[0], totalPoints: 45200, memberCount: 12 },
-  { rank: 2, group: {id: 'group-4', name: 'Yoga Masters', description: 'Paz e flexibilidade.', memberCount: 15, iconUrl: 'https://picsum.photos/seed/group4/200/200'}, totalPoints: 42100, memberCount: 15 },
+  { rank: 2, group: {id: 'group-4', name: 'Yoga Masters', description: 'Paz e flexibilidade.', memberCount: 15, iconUrl: 'https://picsum.photos/seed/group4/200/200', objective: 'Praticar yoga diariamente', commonHabits: []}, totalPoints: 42100, memberCount: 15 },
   { rank: 3, group: groups[1], totalPoints: 38900, memberCount: 8 },
-  { rank: 4, group: {id: 'group-5', name: 'Foodies Saudáveis', description: 'Comida boa e saudável.', memberCount: 18, iconUrl: 'https://picsum.photos/seed/group5/200/200'}, totalPoints: 35500, memberCount: 18 },
+  { rank: 4, group: {id: 'group-5', name: 'Foodies Saudáveis', description: 'Comida boa e saudável.', memberCount: 18, iconUrl: 'https://picsum.photos/seed/group5/200/200', objective: 'Compartilhar uma receita saudável por semana', commonHabits: []}, totalPoints: 35500, memberCount: 18 },
   { rank: 5, group: groups[2], totalPoints: 32000, memberCount: 25 },
 ];
