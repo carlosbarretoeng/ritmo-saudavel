@@ -22,15 +22,44 @@ import { Input } from '@/components/ui/input';
 import { useLoading } from '@/contexts/loading-context';
 
 
-function PendingHabitCheckin({ habit }: { habit: Habit }) {
+type PendingHabitCheckinProps = {
+    habit: Habit;
+    progress?: number;
+    goal?: number;
+}
+
+function PendingHabitCheckin({ habit, progress = 0, goal = 0 }: PendingHabitCheckinProps) {
     const { setIsLoading } = useLoading();
     const Icon = habitIcons[habit.icon] || habitIcons['Sprout'];
+
+    const isMetricWithGoal = habit.type === 'metric' && goal > 0;
+    const progressPercentage = isMetricWithGoal ? Math.min((progress / goal) * 100, 100) : 0;
+    
+    if (!isMetricWithGoal) {
+        return (
+            <Link href={`/checkin/${habit.id}`} onClick={() => setIsLoading(true)} className="flex flex-col items-center gap-2 no-underline">
+                <div className="w-16 h-16 rounded-full border-2 border-dashed border-primary bg-primary/10 flex items-center justify-center text-primary hover:bg-primary/20 transition-colors">
+                    <Icon className="w-8 h-8" />
+                </div>
+                <p className="text-xs font-medium text-center text-muted-foreground truncate w-full">{habit.name}</p>
+            </Link>
+        );
+    }
+    
     return (
         <Link href={`/checkin/${habit.id}`} onClick={() => setIsLoading(true)} className="flex flex-col items-center gap-2 no-underline">
-            <div className="w-16 h-16 rounded-full border-2 border-dashed border-primary bg-primary/10 flex items-center justify-center text-primary hover:bg-primary/20 transition-colors">
-                <Icon className="w-8 h-8" />
+             <div 
+                className="relative w-16 h-16 rounded-full flex items-center justify-center"
+                style={{
+                    background: `conic-gradient(hsl(var(--primary)) ${progressPercentage}%, hsl(var(--muted)) ${progressPercentage}%)`
+                }}
+            >
+                <div className="w-14 h-14 rounded-full bg-background flex items-center justify-center">
+                    <Icon className="w-8 h-8 text-primary" />
+                </div>
             </div>
             <p className="text-xs font-medium text-center text-muted-foreground truncate w-full">{habit.name}</p>
+            <p className="text-xs font-bold text-muted-foreground -mt-1">{`${progress.toLocaleString('pt-BR')} / ${goal.toLocaleString('pt-BR')}${habit.unit ? ` ${habit.unit}`: ''}`}</p>
         </Link>
     );
 }
@@ -209,9 +238,20 @@ export default function DashboardPage() {
               <div className="space-y-3">
                 <h2 className="font-bold text-md px-1">Check-ins de hoje</h2>
                 <div className="grid grid-cols-3 gap-4">
-                  {pendingHabits.map(habit => (
-                      <PendingHabitCheckin key={habit.id} habit={habit} />
-                  ))}
+                  {pendingHabits.map(habit => {
+                      const config = enabledHabitConfigs.find(c => c.habitId === habit.id);
+                      const activitiesForHabit = todaysUserActivities.filter(a => a.habitId === habit.id);
+                      const progress = activitiesForHabit.reduce((sum, act) => sum + (act.checkinValue || 0), 0);
+                      
+                      return (
+                          <PendingHabitCheckin 
+                              key={habit.id} 
+                              habit={habit} 
+                              progress={progress}
+                              goal={config?.goal}
+                          />
+                      )
+                  })}
                 </div>
               </div>
             ) : (
