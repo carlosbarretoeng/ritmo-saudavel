@@ -35,6 +35,7 @@ function PendingHabitCheckin({ habit }: { habit: Habit }) {
 
 function ActivityPost({ activity }: { activity: Activity }) {
     const [showCommentInput, setShowCommentInput] = useState(false);
+    const [showAllComments, setShowAllComments] = useState(false);
 
     return (
         <Card className="overflow-hidden">
@@ -79,10 +80,28 @@ function ActivityPost({ activity }: { activity: Activity }) {
                         <span className="font-bold">{activity.user.name}</span>{' '}
                         {activity.text}
                     </p>
-                     <Button variant="link" className="p-0 h-auto text-xs text-muted-foreground">
-                        Ver todos os {activity.comments} comentários
+                    {activity.comments && activity.comments.length > 0 && (
+                     <Button variant="link" className="p-0 h-auto text-xs text-muted-foreground" onClick={() => setShowAllComments(prev => !prev)}>
+                        {showAllComments ? 'Ocultar comentários' : `Ver todos os ${activity.comments.length} comentários`}
                      </Button>
+                    )}
                  </div>
+                 {showAllComments && (
+                    <div className="w-full space-y-3 pt-2 text-sm">
+                        {activity.comments.map((comment) => (
+                            <div key={comment.id} className="flex items-start gap-2 px-1">
+                                <Avatar className="w-6 h-6 border">
+                                    <AvatarImage src={comment.user.avatarUrl} alt={comment.user.name} />
+                                    <AvatarFallback>{comment.user.name.charAt(0)}</AvatarFallback>
+                                </Avatar>
+                                <p className="leading-snug">
+                                    <span className="font-bold">{comment.user.name}</span>{' '}
+                                    {comment.text}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                 )}
                  {showCommentInput && (
                     <div className="w-full pt-2">
                       <div className="relative">

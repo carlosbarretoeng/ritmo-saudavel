@@ -1,4 +1,4 @@
-import type { User, Habit, Group, AppUser, GroupWithMembers, ChatMessage, Activity, HabitIdea, GroupObjective } from './types';
+import type { User, Habit, Group, AppUser, GroupWithMembers, ChatMessage, Activity, HabitIdea, GroupObjective, Comment } from './types';
 import { placeholderImages as allPlaceholderImages } from './placeholder-images';
 
 export const placeholderImages = allPlaceholderImages;
@@ -47,7 +47,10 @@ export const activityFeed: Activity[] = [
         imageUrl: placeholderImages.find(p => p.id === 'activity-1')?.imageUrl || '',
         imageHint: placeholderImages.find(p => p.id === 'activity-1')?.imageHint || '',
         likes: 23,
-        comments: 5,
+        comments: [
+            { id: 'comment-1-1', user: users[1], text: 'Boa, Ana! Continue assim!' },
+            { id: 'comment-1-2', user: users[3], text: 'Arrasou! 🔥' },
+        ],
     },
     {
         id: 'act-2',
@@ -58,7 +61,11 @@ export const activityFeed: Activity[] = [
         imageUrl: placeholderImages.find(p => p.id === 'activity-2')?.imageUrl || '',
         imageHint: placeholderImages.find(p => p.id === 'activity-2')?.imageHint || '',
         likes: 42,
-        comments: 11,
+        comments: [
+            { id: 'comment-2-1', user: users[0], text: 'Que foto linda!' },
+            { id: 'comment-2-2', user: users[3], text: 'Preciso fazer isso também.' },
+            { id: 'comment-2-3', user: mainUser, text: 'Adorei!' },
+        ],
     },
     {
         id: 'act-3',
@@ -69,7 +76,9 @@ export const activityFeed: Activity[] = [
         imageUrl: placeholderImages.find(p => p.id === 'activity-3')?.imageUrl || '',
         imageHint: placeholderImages.find(p => p.id === 'activity-3')?.imageHint || '',
         likes: 15,
-        comments: 3,
+        comments: [
+            { id: 'comment-3-1', user: users[2], text: 'Qual o nome do livro?' },
+        ],
     },
 ];
 

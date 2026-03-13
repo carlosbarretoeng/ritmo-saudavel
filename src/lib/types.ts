@@ -60,6 +60,12 @@ export type ChatMessage = {
     timestamp: Date;
 };
 
+export type Comment = {
+  id: string;
+  user: User;
+  text: string;
+};
+
 export type Activity = {
     id: string;
     user: User;
@@ -69,7 +75,7 @@ export type Activity = {
     imageHint?: string;
     habitName?: string;
     likes: number;
-    comments: number;
+    comments: Comment[];
     checkinValue?: number;
     checkinUnit?: string;
 };
