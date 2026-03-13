@@ -37,6 +37,19 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           </Link>
         </SidebarHeader>
         <SidebarContent>
+           <div className="p-2">
+            <Link href="/profile" className="flex items-center gap-3 p-2 rounded-md hover:bg-sidebar-accent">
+              <Avatar className="w-9 h-9">
+                <AvatarImage src={mainUser.avatarUrl} alt={mainUser.name} />
+                <AvatarFallback>{mainUser.name.charAt(0)}</AvatarFallback>
+              </Avatar>
+              <div className="flex flex-col group-data-[collapsible=icon]:hidden">
+                  <span className="text-sm font-semibold text-sidebar-foreground">{mainUser.name}</span>
+                  <span className="text-xs text-sidebar-foreground/70">{mainUser.email}</span>
+              </div>
+            </Link>
+          </div>
+          <SidebarSeparator />
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton asChild tooltip="Dashboard">
@@ -91,17 +104,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
-          <SidebarSeparator className="my-1" />
-           <Link href="/profile" className="flex items-center gap-3 p-2 rounded-md hover:bg-sidebar-accent">
-            <Avatar className="w-9 h-9">
-              <AvatarImage src={mainUser.avatarUrl} alt={mainUser.name} />
-              <AvatarFallback>{mainUser.name.charAt(0)}</AvatarFallback>
-            </Avatar>
-            <div className="flex flex-col group-data-[collapsible=icon]:hidden">
-                <span className="text-sm font-semibold text-sidebar-foreground">{mainUser.name}</span>
-                <span className="text-xs text-sidebar-foreground/70">{mainUser.email}</span>
-            </div>
-          </Link>
         </SidebarFooter>
       </Sidebar>
       <SidebarInset>
