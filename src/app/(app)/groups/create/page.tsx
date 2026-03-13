@@ -12,10 +12,12 @@ import { Camera, ArrowLeft } from 'lucide-react';
 import { systemHabits, userHabitConfigs } from '@/lib/data';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useLoading } from '@/contexts/loading-context';
+import { useToast } from '@/hooks/use-toast';
 
 export default function CreateGroupPage() {
   const router = useRouter();
   const { setIsLoading } = useLoading();
+  const { toast } = useToast();
   const [groupName, setGroupName] = useState('');
   const [groupDescription, setGroupDescription] = useState('');
   const [groupIcon, setGroupIcon] = useState<string | null>(null);
@@ -26,6 +28,24 @@ export default function CreateGroupPage() {
   );
 
   const handleCreateGroup = () => {
+    if (!groupName.trim()) {
+      toast({
+        variant: 'destructive',
+        title: 'Nome do Grupo Necessário',
+        description: 'Por favor, dê um nome ao seu grupo.',
+      });
+      return;
+    }
+    
+    if (selectedHabits.length === 0) {
+      toast({
+        variant: 'destructive',
+        title: 'Seleção de Hábito Necessária',
+        description: 'Por favor, selecione pelo menos um hábito para o grupo.',
+      });
+      return;
+    }
+
     setIsLoading(true);
     // Logic to create the group would go here
     console.log({
@@ -103,8 +123,8 @@ export default function CreateGroupPage() {
             </div>
             
             <div className="space-y-4">
-                <Label>Hábitos em Comum (Opcional)</Label>
-                 <p className="text-xs text-muted-foreground">Selecione os hábitos que serão o foco deste grupo.</p>
+                <Label>Hábitos em Comum</Label>
+                 <p className="text-xs text-muted-foreground">Selecione pelo menos um hábito que será o foco deste grupo.</p>
                 <div className="space-y-3 rounded-md border p-4 bg-muted/50 max-h-48 overflow-y-auto">
                     {userHabits.length > 0 ? userHabits.map((habit) => (
                         <div key={habit.id} className="flex items-center gap-3">
