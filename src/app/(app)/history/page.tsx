@@ -44,13 +44,12 @@ export default function HistoryPage() {
       <Card>
           <CardContent className="flex justify-center p-2 sm:p-4">
             <Calendar
-                mode="single"
                 selected={date}
-                onSelect={setDate}
+                onSelect={(day) => setDate(day)}
                 locale={ptBR}
                 modifiers={{ completed: completedDays }}
                 modifiersClassNames={{
-                    completed: 'bg-primary/20 text-primary-foreground rounded-full',
+                    completed: 'bg-primary/20 text-primary-foreground',
                 }}
                 className="rounded-md"
             />

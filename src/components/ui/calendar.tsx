@@ -2,64 +2,166 @@
 
 import * as React from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
-import { DayPicker } from "react-day-picker"
+import {
+  format,
+  addMonths,
+  subMonths,
+  startOfMonth,
+  endOfMonth,
+  startOfWeek,
+  endOfWeek,
+  addDays,
+  isSameMonth,
+  isSameDay,
+  type Locale,
+} from "date-fns"
+import { ptBR } from 'date-fns/locale'
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 
-export type CalendarProps = React.ComponentProps<typeof DayPicker>
+export type CalendarProps = {
+  selected?: Date;
+  onSelect?: (date: Date) => void;
+  modifiers?: {
+    [key: string]: Date | Date[] | undefined;
+  };
+  modifiersClassNames?: {
+    [key:string]: string;
+  };
+  className?: string;
+  classNames?: {
+    day?: string;
+  }
+  locale?: Locale;
+  showOutsideDays?: boolean;
+}
 
 function Calendar({
   className,
   classNames,
+  selected,
+  onSelect = () => {},
+  modifiers,
+  modifiersClassNames,
+  locale = ptBR,
   showOutsideDays = true,
-  ...props
 }: CalendarProps) {
+  const [currentMonth, setCurrentMonth] = React.useState(startOfMonth(selected || new Date()));
+
+  const nextMonth = () => setCurrentMonth(addMonths(currentMonth, 1));
+  const prevMonth = () => setCurrentMonth(subMonths(currentMonth, 1));
+
+  const renderHeader = () => (
+    <div className="flex justify-center pt-1 relative items-center">
+      <h2 className="text-sm font-medium capitalize">
+        {format(currentMonth, "LLLL yyyy", { locale })}
+      </h2>
+      <div className="space-x-1 flex items-center absolute right-1">
+        <button onClick={prevMonth} className={cn(buttonVariants({ variant: "outline" }), "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100")}>
+          <ChevronLeft className="h-4 w-4" />
+          <span className="sr-only">Previous month</span>
+        </button>
+        <button onClick={nextMonth} className={cn(buttonVariants({ variant: "outline" }), "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100")}>
+          <ChevronRight className="h-4 w-4" />
+          <span className="sr-only">Next month</span>
+        </button>
+      </div>
+    </div>
+  );
+
+  const renderWeekDays = () => {
+    const weekStartDate = startOfWeek(currentMonth, { locale });
+    const days = [];
+    for (let i = 0; i < 7; i++) {
+      days.push(
+        <div key={i} className="text-muted-foreground rounded-md w-9 font-normal text-[0.8rem] text-center capitalize">
+          {format(addDays(weekStartDate, i), "EEE", { locale })}
+        </div>
+      );
+    }
+    return <div className="flex mt-4">{days}</div>;
+  };
+
+  const renderCells = () => {
+    const monthStart = startOfMonth(currentMonth);
+    const monthEnd = endOfMonth(monthStart);
+    const startDate = startOfWeek(monthStart, { locale });
+    const endDate = endOfWeek(monthEnd, { locale });
+
+    const rows = [];
+    let days = [];
+    let day = startDate;
+
+    while (day <= endDate) {
+      for (let i = 0; i < 7; i++) {
+        const cloneDay = day;
+        const isOutsideMonth = !isSameMonth(cloneDay, monthStart);
+
+        if (isOutsideMonth && !showOutsideDays) {
+          days.push(<div key={day.toString()} className="w-9 h-9" />);
+        } else {
+          const isSelected = selected ? isSameDay(cloneDay, selected) : false;
+          
+          let modifierClasses = '';
+          if (modifiers && modifiersClassNames) {
+            for (const key in modifiers) {
+              const modifierDateOrDates = modifiers[key];
+              if (modifierDateOrDates) {
+                const isModified = Array.isArray(modifierDateOrDates)
+                  ? modifierDateOrDates.some(d => isSameDay(cloneDay, d))
+                  : isSameDay(cloneDay, modifierDateOrDates);
+                
+                if (isModified && !isSelected) {
+                  modifierClasses = cn(modifierClasses, modifiersClassNames[key]);
+                }
+              }
+            }
+          }
+
+          days.push(
+            <div
+              key={day.toString()}
+              className="h-9 w-9 text-center text-sm p-0 relative"
+            >
+              <button
+                onClick={() => onSelect(cloneDay)}
+                className={cn(
+                  buttonVariants({ variant: "ghost" }),
+                  "h-9 w-9 p-0 font-normal",
+                  isOutsideMonth && "text-muted-foreground opacity-50",
+                  isSelected && "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
+                  !isSelected && isSameDay(cloneDay, new Date()) && "bg-accent text-accent-foreground",
+                  !isSelected && !isOutsideMonth && "hover:bg-accent hover:text-accent-foreground",
+                  modifierClasses,
+                  classNames?.day
+                )}
+                disabled={isOutsideMonth && !showOutsideDays}
+              >
+                {format(cloneDay, "d")}
+              </button>
+            </div>
+          );
+        }
+        day = addDays(day, 1);
+      }
+      rows.push(
+        <div className="flex w-full mt-2 justify-around" key={day.toString()}>
+          {days}
+        </div>
+      );
+      days = [];
+    }
+    return <div>{rows}</div>;
+  };
+
   return (
-    <DayPicker
-      showOutsideDays={showOutsideDays}
-      className={cn("p-3", className)}
-      classNames={{
-        months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
-        month: "space-y-4",
-        caption: "flex justify-center pt-1 relative items-center",
-        caption_label: "text-sm font-medium",
-        nav: "space-x-1 flex items-center",
-        nav_button: cn(
-          buttonVariants({ variant: "outline" }),
-          "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100"
-        ),
-        nav_button_previous: "absolute left-1",
-        nav_button_next: "absolute right-1",
-        table: "w-full border-collapse space-y-1",
-        head_row: "flex",
-        head_cell:
-          "text-muted-foreground rounded-md w-9 font-normal text-[0.8rem]",
-        row: "flex w-full mt-2",
-        cell: "h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
-        day: cn(
-          buttonVariants({ variant: "ghost" }),
-          "h-9 w-9 p-0 font-normal aria-selected:opacity-100"
-        ),
-        day_range_end: "day-range-end",
-        day_selected:
-          "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
-        day_today: "bg-accent text-accent-foreground",
-        day_outside:
-          "day-outside text-muted-foreground opacity-50 aria-selected:bg-accent/50 aria-selected:text-muted-foreground",
-        day_disabled: "text-muted-foreground opacity-50",
-        day_range_middle:
-          "aria-selected:bg-accent aria-selected:text-accent-foreground",
-        day_hidden: "invisible",
-        ...classNames,
-      }}
-      components={{
-        IconLeft: () => <ChevronLeft className="h-4 w-4" />,
-        IconRight: () => <ChevronRight className="h-4 w-4" />,
-      }}
-      {...props}
-    />
-  )
+    <div className={cn("p-3", className)}>
+      {renderHeader()}
+      {renderWeekDays()}
+      {renderCells()}
+    </div>
+  );
 }
 Calendar.displayName = "Calendar"
 
