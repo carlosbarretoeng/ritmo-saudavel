@@ -62,12 +62,12 @@ export default function HabitsPage() {
 
   return (
     <div className="space-y-6">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
                 <h1 className="text-2xl font-bold font-headline">Gerenciar Hábitos</h1>
                 <p className="text-muted-foreground">Ative os hábitos que deseja seguir e defina suas metas.</p>
             </div>
-            <Button onClick={handleSaveChanges}>Salvar Alterações</Button>
+            <Button onClick={handleSaveChanges} className="w-full sm:w-auto">Salvar Alterações</Button>
         </div>
 
         {Object.entries(groupedHabits).map(([category, habits]) => (
@@ -82,9 +82,9 @@ export default function HabitsPage() {
                         if (!config) return null;
 
                         return (
-                            <div key={habit.id} className="p-2 rounded-lg hover:bg-muted/50 transition-colors">
+                            <div key={habit.id} className="p-2 -mx-2 rounded-lg hover:bg-muted/50 transition-colors">
                                 <div className="flex items-center gap-4">
-                                    <Icon className="w-8 h-8 text-primary" />
+                                    <Icon className="w-8 h-8 text-primary shrink-0" />
                                     <div className="flex-grow">
                                     <p className="font-bold">{habit.name}</p>
                                     <p className="text-sm text-muted-foreground">
@@ -100,7 +100,7 @@ export default function HabitsPage() {
                                     />
                                 </div>
                                 {config.isEnabled && habit.type === 'metric' && (
-                                <div className="mt-4 pl-12">
+                                <div className="mt-4 sm:pl-12">
                                     <Label htmlFor={`goal-${habit.id}`} className="text-xs font-medium text-muted-foreground">Definir nova meta diária</Label>
                                     <div className="flex items-center gap-2 mt-1">
                                         <Input
