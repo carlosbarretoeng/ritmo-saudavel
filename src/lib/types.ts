@@ -11,9 +11,18 @@ export type Habit = {
   id: string;
   name: string;
   icon: string; // Corresponds to a lucide-react icon name
-  frequency: 'daily' | 'weekly';
-  completedToday: boolean;
+  type: 'metric' | 'boolean';
+  category: string;
+  defaultGoal?: number;
+  unit?: string;
 };
+
+export type UserHabitConfig = {
+  habitId: string;
+  isEnabled: boolean;
+  goal: number;
+};
+
 
 export type GroupObjective = {
   title: string;
@@ -48,7 +57,6 @@ export type AppUser = User & {
   currentStreak: number;
   longestStreak: number;
   achievements: string[];
-  habits: string[]; // array of habit ids
   groups: string[]; // array of group ids
   birthdate: string;
 };
@@ -75,6 +83,7 @@ export type Activity = {
     timestamp: Date;
     imageUrl?: string;
     imageHint?: string;
+    habitId: string;
     habitName?: string;
     likes: number;
     comments: Comment[];

@@ -1,4 +1,4 @@
-import type { User, Habit, Group, AppUser, GroupWithMembers, ChatMessage, Activity, HabitIdea, GroupObjective, Comment } from './types';
+import type { User, Habit, Group, AppUser, GroupWithMembers, ChatMessage, Activity, HabitIdea, GroupObjective, Comment, UserHabitConfig } from './types';
 import { placeholderImages as allPlaceholderImages } from './placeholder-images';
 
 export const placeholderImages = allPlaceholderImages;
@@ -21,28 +21,35 @@ export const mainUser: AppUser = {
   currentStreak: 12,
   longestStreak: 25,
   achievements: ['Iniciante', '5 Dias de Foco', 'Primeiro Grupo'],
-  habits: ['habit-1', 'habit-2', 'habit-3', 'habit-4', 'habit-5', 'habit-6'],
   groups: ['group-1', 'group-2'],
   avatarUrl: placeholderImages.find(p => p.id === 'avatar-2')?.imageUrl || '',
   birthdate: '1994-08-22',
 };
 
-
-export const habits: Habit[] = [
-  { id: 'habit-1', name: 'Beber 2L de água', icon: 'GlassWater', frequency: 'daily', completedToday: false },
-  { id: 'habit-2', name: 'Correr 30 minutos', icon: 'Flame', frequency: 'daily', completedToday: false },
-  { id: 'habit-3', name: 'Ler 10 páginas', icon: 'Book', frequency: 'daily', completedToday: false },
-  { id: 'habit-4', name: 'Meditar 5 minutos', icon: 'HeartPulse', frequency: 'daily', completedToday: false },
-  { id: 'habit-5', name: 'Acordar cedo', icon: 'Sunrise', frequency: 'daily', completedToday: false },
-  { id: 'habit-6', name: 'Alongar', icon: 'Sprout', frequency: 'daily', completedToday: false },
-
+export const systemHabits: Habit[] = [
+  { id: 'habit-1', name: 'Beber Água', icon: 'GlassWater', type: 'metric', category: 'Saúde', defaultGoal: 2, unit: 'L' },
+  { id: 'habit-2', name: 'Correr', icon: 'Flame', type: 'metric', category: 'Fitness', defaultGoal: 30, unit: 'min' },
+  { id: 'habit-3', name: 'Ler', icon: 'Book', type: 'metric', category: 'Desenvolvimento', defaultGoal: 15, unit: 'pág' },
+  { id: 'habit-4', name: 'Meditar', icon: 'HeartPulse', type: 'boolean', category: 'Bem-estar' },
+  { id: 'habit-5', name: 'Acordar Cedo', icon: 'Sunrise', type: 'boolean', category: 'Produtividade' },
+  { id: 'habit-6', name: 'Alongar', icon: 'Sprout', type: 'boolean', category: 'Fitness' },
 ];
+
+export const userHabitConfigs: UserHabitConfig[] = [
+    { habitId: 'habit-1', isEnabled: true, goal: 2.5 },
+    { habitId: 'habit-2', isEnabled: true, goal: 45 },
+    { habitId: 'habit-3', isEnabled: true, goal: 20 },
+    { habitId: 'habit-4', isEnabled: true, goal: 1 },
+    { habitId: 'habit-5', isEnabled: false, goal: 1 },
+    { habitId: 'habit-6', isEnabled: true, goal: 1 },
+]
 
 export const activityFeed: Activity[] = [
     {
         id: 'act-1',
         user: users[0],
-        habitName: 'Correr 30 minutos',
+        habitId: 'habit-2',
+        habitName: 'Correr',
         text: 'Mantendo o foco no desafio da semana! 🏃‍♀️ #corrida #saude',
         timestamp: new Date(Date.now() - 1000 * 60 * 15),
         imageUrl: placeholderImages.find(p => p.id === 'activity-1')?.imageUrl || '',
@@ -52,22 +59,28 @@ export const activityFeed: Activity[] = [
             { id: 'comment-1-1', user: users[1], text: 'Boa, Ana! Continue assim!' },
             { id: 'comment-1-2', user: users[3], text: 'Arrasou! 🔥' },
         ],
+        checkinValue: 30,
+        checkinUnit: 'min',
     },
     {
         id: 'act-4',
         user: mainUser,
-        habitName: 'Beber 2L de água',
+        habitId: 'habit-1',
+        habitName: 'Beber Água',
         text: 'Check-in de hoje feito! Mantendo a hidratação.',
         timestamp: new Date(),
         imageUrl: "https://picsum.photos/seed/activity4/600/800",
         imageHint: "water bottle",
         likes: 5,
         comments: [],
+        checkinValue: 1,
+        checkinUnit: 'L',
     },
     {
         id: 'act-2',
         user: users[2],
-        habitName: 'Meditar 5 minutos',
+        habitId: 'habit-4',
+        habitName: 'Meditar',
         text: 'Um momento de paz para começar o dia.',
         timestamp: new Date(Date.now() - 1000 * 60 * 58),
         imageUrl: placeholderImages.find(p => p.id === 'activity-2')?.imageUrl || '',
@@ -82,7 +95,8 @@ export const activityFeed: Activity[] = [
     {
         id: 'act-3',
         user: users[1],
-        habitName: 'Ler 10 páginas',
+        habitId: 'habit-3',
+        habitName: 'Ler',
         text: 'Terminei mais um capítulo incrível! Recomendo muito esse livro.',
         timestamp: new Date(Date.now() - 1000 * 60 * 60 * 3),
         imageUrl: placeholderImages.find(p => p.id === 'activity-3')?.imageUrl || '',
@@ -91,6 +105,8 @@ export const activityFeed: Activity[] = [
         comments: [
             { id: 'comment-3-1', user: users[2], text: 'Qual o nome do livro?' },
         ],
+        checkinValue: 25,
+        checkinUnit: 'pág'
     },
 ];
 

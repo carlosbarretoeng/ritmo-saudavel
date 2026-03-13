@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { habits as allHabits } from '@/lib/data';
+import { systemHabits, userHabitConfigs } from '@/lib/data';
 import { Habit } from '@/lib/types';
 import { Camera } from 'lucide-react';
 import { habitIcons } from '@/lib/icons';
@@ -20,15 +20,14 @@ export default function CheckinPage() {
   const habitId = params.habitId as string;
   const { setIsLoading } = useLoading();
 
-  const habit = allHabits.find((h) => h.id === habitId);
+  const habit = systemHabits.find((h) => h.id === habitId);
+  const userConfig = userHabitConfigs.find(c => c.habitId === habitId);
 
   const [description, setDescription] = useState('');
   const [photo, setPhoto] = useState<string | null>(null);
   const [checkinValue, setCheckinValue] = useState('');
-  const [checkinUnit, setCheckinUnit] = useState('');
 
-
-  if (!habit) {
+  if (!habit || !userConfig) {
     notFound();
   }
 
@@ -41,14 +40,13 @@ export default function CheckinPage() {
       habitId,
       description,
       photo,
-      value: checkinValue,
-      unit: checkinUnit,
+      value: habit.type === 'metric' ? parseFloat(checkinValue) : 1, // Save value for metric, or just 1 for boolean
+      unit: habit.unit,
     });
     
     // Simulate API call
     setTimeout(() => {
-      // For now, just mark as completed and navigate back to dashboard
-      habit.completedToday = true;
+      // For now, just navigate back to dashboard
       setIsLoading(false);
       router.push('/dashboard');
     }, 1500);
@@ -97,32 +95,23 @@ export default function CheckinPage() {
             />
           </div>
 
-          <div className="space-y-4">
-            <div className="grid grid-cols-5 gap-2">
-              <div className="col-span-3 space-y-2">
-                  <Label htmlFor="checkin-value">Valor</Label>
-                  <Input 
-                      id="checkin-value"
-                      type="number" 
-                      placeholder="Ex: 5"
-                      value={checkinValue}
-                      onChange={(e) => setCheckinValue(e.target.value)}
-                      className="text-base"
-                  />
-              </div>
-              <div className="col-span-2 space-y-2">
-                  <Label htmlFor="checkin-unit">Unidade</Label>
-                  <Input 
-                      id="checkin-unit"
-                      placeholder="Ex: km" 
-                      value={checkinUnit}
-                      onChange={(e) => setCheckinUnit(e.target.value)}
-                      className="text-base"
-                  />
-              </div>
+          {habit.type === 'metric' && (
+             <div className="space-y-2">
+                <Label htmlFor="checkin-value">Quanto você progrediu hoje?</Label>
+                <div className="flex items-center gap-2">
+                    <Input 
+                        id="checkin-value"
+                        type="number" 
+                        placeholder={`Ex: ${userConfig.goal / 2}`}
+                        value={checkinValue}
+                        onChange={(e) => setCheckinValue(e.target.value)}
+                        className="text-base"
+                    />
+                    {habit.unit && <span className="font-medium text-muted-foreground">{habit.unit}</span>}
+                </div>
+                <p className="text-xs text-muted-foreground px-1">Sua meta diária é {userConfig.goal} {habit.unit}.</p>
             </div>
-            <p className="text-xs text-muted-foreground px-1">Opcional: adicione um valor para acompanhar o progresso em seus grupos.</p>
-          </div>
+          )}
 
           <div className="flex flex-col gap-2">
             <Button onClick={handlePublish} className="w-full" size="lg">

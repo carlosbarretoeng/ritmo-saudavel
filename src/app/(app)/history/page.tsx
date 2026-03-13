@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calendar } from '@/components/ui/calendar';
-import { mainUser, activityFeed, habits } from '@/lib/data';
+import { mainUser, activityFeed, systemHabits } from '@/lib/data';
 import { isSameDay, format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import Image from 'next/image';
@@ -19,16 +19,13 @@ export default function HistoryPage() {
     setIsClient(true);
   }, []);
 
-  const userActivities = activityFeed.filter(a => {
-    // Include activities from the user and where the user commented
-    return a.user.id === mainUser.id;
-  });
+  const userActivities = activityFeed.filter(a => a.user.id === mainUser.id);
 
   const completedDays = [
-  ...new Set(
-    userActivities.map(a => new Date(a.timestamp).setHours(0, 0, 0, 0))
-  ),
-].map(d => new Date(d));
+    ...new Set(
+      userActivities.map(a => new Date(a.timestamp).setHours(0, 0, 0, 0))
+    ),
+  ].map(d => new Date(d));
 
   const selectedActivities = userActivities.filter(activity => 
     date && isSameDay(activity.timestamp, date)
@@ -42,7 +39,7 @@ export default function HistoryPage() {
       </div>
       
       <Card>
-          <CardContent className="flex justify-center p-2 sm:p-4">
+          <CardContent className="flex justify-center p-0 sm:p-0">
             <Calendar
                 selected={date}
                 onSelect={(day) => setDate(day)}
@@ -62,7 +59,7 @@ export default function HistoryPage() {
             </h2>
             {selectedActivities.length > 0 ? (
                  selectedActivities.map(activity => {
-                    const habit = habits.find(h => h.name === activity.habitName);
+                    const habit = systemHabits.find(h => h.id === activity.habitId);
                     const HabitIcon = habit ? habitIcons[habit.icon] : null;
                     return (
                         <Card key={activity.id} className="overflow-hidden">
@@ -97,6 +94,11 @@ export default function HistoryPage() {
                                  <p className="text-sm">
                                     {activity.text}
                                 </p>
+                                {activity.checkinValue && (
+                                    <p className="text-sm font-bold text-primary mt-2">
+                                        Progresso: {activity.checkinValue} {activity.checkinUnit}
+                                    </p>
+                                )}
                             </CardContent>
                         </Card>
                     )

@@ -15,7 +15,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { groupDetails, groupChatMessages, habits as allHabits } from "@/lib/data";
+import { groupDetails, groupChatMessages, systemHabits as allHabits } from "@/lib/data";
 import { Send, Users, Trophy, Target, HeartPulse, Share2, ArrowLeft, Copy } from "lucide-react";
 import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';

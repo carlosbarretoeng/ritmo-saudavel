@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Camera, ArrowLeft } from 'lucide-react';
-import { habits as allHabits, mainUser } from '@/lib/data';
+import { systemHabits, userHabitConfigs } from '@/lib/data';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useLoading } from '@/contexts/loading-context';
 
@@ -24,7 +24,9 @@ export default function CreateGroupPage() {
   const [groupObjectiveUnit, setGroupObjectiveUnit] = useState('');
   const [selectedHabits, setSelectedHabits] = useState<string[]>([]);
 
-  const userHabits = allHabits.filter((habit) => mainUser.habits.includes(habit.id));
+  const userHabits = systemHabits.filter(sh => 
+    userHabitConfigs.find(uc => uc.habitId === sh.id && uc.isEnabled)
+  );
 
   const handleCreateGroup = () => {
     setIsLoading(true);
@@ -147,8 +149,9 @@ export default function CreateGroupPage() {
             
             <div className="space-y-4">
                 <Label>Hábitos em Comum (Opcional)</Label>
-                <div className="space-y-3 rounded-md border p-4 bg-muted/50">
-                    {userHabits.map((habit) => (
+                 <p className="text-xs text-muted-foreground">Selecione os hábitos que serão o foco deste grupo.</p>
+                <div className="space-y-3 rounded-md border p-4 bg-muted/50 max-h-48 overflow-y-auto">
+                    {userHabits.length > 0 ? userHabits.map((habit) => (
                         <div key={habit.id} className="flex items-center gap-3">
                             <Checkbox
                                 id={`habit-${habit.id}`}
@@ -162,7 +165,9 @@ export default function CreateGroupPage() {
                                 {habit.name}
                             </Label>
                         </div>
-                    ))}
+                    )) : (
+                        <p className="text-sm text-center text-muted-foreground py-4">Você não tem hábitos ativos para selecionar.</p>
+                    )}
                 </div>
             </div>
 

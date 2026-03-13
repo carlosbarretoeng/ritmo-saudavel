@@ -13,9 +13,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Flame, Star, Heart, MessageCircle, PartyPopper, Send } from "lucide-react";
-import { mainUser, habits as allHabits, activityFeed } from "@/lib/data";
+import { mainUser, systemHabits, userHabitConfigs, activityFeed } from "@/lib/data";
 import { Habit, Activity } from "@/lib/types";
-import { formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow, isToday } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { habitIcons } from '@/lib/icons';
 import { Input } from '@/components/ui/input';
@@ -128,11 +128,36 @@ function ActivityPost({ activity }: { activity: Activity }) {
 export default function DashboardPage() {
   const [isFreeDay, setIsFreeDay] = useState(false);
   const { setIsLoading } = useLoading();
-  const userHabits = allHabits.filter((h) => mainUser.habits.includes(h.id));
-  const pendingHabits = userHabits.filter(h => !h.completedToday);
-  const hasCompletedHabits = userHabits.length > pendingHabits.length;
-  
   const handleNavClick = () => setIsLoading(true);
+
+  const enabledHabitConfigs = userHabitConfigs.filter(c => c.isEnabled);
+  const enabledHabits = systemHabits.filter(h => enabledHabitConfigs.some(c => c.habitId === h.id));
+  
+  const todaysUserActivities = activityFeed.filter(
+    (a) => a.user.id === mainUser.id && isToday(a.timestamp)
+  );
+
+  const pendingHabits = enabledHabits.filter(habit => {
+    const config = enabledHabitConfigs.find(c => c.habitId === habit.id);
+    if (!config) return false;
+
+    const activitiesForHabit = todaysUserActivities.filter(a => a.habitId === habit.id);
+
+    if (habit.type === 'boolean') {
+      return activitiesForHabit.length === 0;
+    }
+
+    if (habit.type === 'metric') {
+      const progress = activitiesForHabit.reduce((sum, act) => sum + (act.checkinValue || 0), 0);
+      return progress < config.goal;
+    }
+    
+    return false;
+  });
+
+  const hasCompletedAllHabits = pendingHabits.length === 0 && enabledHabits.length > 0;
+  const hasEnabledHabits = enabledHabits.length > 0;
+
 
   if (isFreeDay) {
     return (
@@ -169,7 +194,7 @@ export default function DashboardPage() {
                     <p className="text-lg font-bold">{mainUser.currentStreak} dias</p>
                 </Link>
             </CardContent>
-            {!hasCompletedHabits && userHabits.length > 0 && (
+            {!hasCompletedAllHabits && hasEnabledHabits && (
                 <CardFooter className="p-0 border-t">
                     <Button variant="ghost" className="w-full rounded-t-none text-muted-foreground" onClick={() => setIsFreeDay(true)}>
                         Tirar um dia livre
@@ -178,7 +203,7 @@ export default function DashboardPage() {
             )}
         </Card>
 
-        {userHabits.length > 0 ? (
+        {hasEnabledHabits ? (
           <>
             {pendingHabits.length > 0 ? (
               <div className="space-y-3">
@@ -206,9 +231,9 @@ export default function DashboardPage() {
         ) : (
            <Card>
                 <CardContent className="p-6 text-center">
-                    <p className="text-muted-foreground">Você ainda não adicionou nenhum hábito.</p>
+                    <p className="text-muted-foreground">Você ainda não ativou nenhum hábito.</p>
                      <Button variant="link" asChild className="mt-2">
-                        <Link href="/habits/create" onClick={handleNavClick}>Crie seu primeiro hábito</Link>
+                        <Link href="/habits" onClick={handleNavClick}>Gerenciar meus hábitos</Link>
                     </Button>
                 </CardContent>
             </Card>
