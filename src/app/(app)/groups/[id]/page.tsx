@@ -55,13 +55,13 @@ export default function GroupDetailPage() {
        <div className="[perspective:1000px]">
         <div
           className={cn(
-            "relative h-[230px] transition-transform duration-700 [transform-style:preserve-3d]",
+            "relative h-[250px] transition-transform duration-700 [transform-style:preserve-3d]",
             isFlipped && "[transform:rotateY(180deg)]"
           )}
         >
           {/* Front Face */}
-          <Card className="absolute w-full h-full [backface-visibility:hidden]">
-            <CardHeader className="flex flex-col items-center text-center p-4 relative h-full">
+          <Card className="absolute w-full h-full [backface-visibility:hidden] flex flex-col">
+            <CardHeader className="flex flex-col items-center text-center p-4 relative">
               <Button
                 variant="ghost"
                 size="icon"
@@ -82,24 +82,26 @@ export default function GroupDetailPage() {
               <div className="space-y-1">
                 <CardTitle className="text-2xl font-headline">{group.name}</CardTitle>
                 <CardDescription>{group.description}</CardDescription>
-                <div className="flex justify-center gap-4 text-muted-foreground pt-1 text-sm">
+              </div>
+            </CardHeader>
+            <CardContent className="p-4 pt-2 flex flex-col flex-grow">
+                <div className="flex justify-center gap-4 text-muted-foreground text-sm">
                     <span className="flex items-center gap-1.5"><Users className="w-4 h-4" /> {group.memberCount} membros</span>
                     <span className="flex items-center gap-1.5"><Trophy className="w-4 h-4" /> Rank: #3</span>
                 </div>
-              </div>
-              {commonHabits && commonHabits.length > 0 && (
-                <div className="w-full pt-2 mt-auto">
-                    <Separator className="mb-3" />
-                    <div className="flex flex-wrap justify-center gap-1.5">
-                        {commonHabits.map(habit => (
-                            <Badge key={habit.id} variant="secondary" className="font-normal">
-                                {habit.name}
-                            </Badge>
-                        ))}
+                {commonHabits && commonHabits.length > 0 && (
+                    <div className="w-full mt-auto pt-3">
+                        <Separator className="mb-3" />
+                        <div className="flex flex-wrap justify-center gap-1.5">
+                            {commonHabits.map(habit => (
+                                <Badge key={habit.id} variant="secondary" className="font-normal">
+                                    {habit.name}
+                                </Badge>
+                            ))}
+                        </div>
                     </div>
-                </div>
-              )}
-            </CardHeader>
+                )}
+            </CardContent>
           </Card>
           
           {/* Back Face */}
