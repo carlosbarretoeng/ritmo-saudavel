@@ -47,12 +47,10 @@ function ActivityPost({ activity }: { activity: Activity }) {
                 <div className="flex-1">
                     <p className="font-bold text-sm">{activity.user.name}</p>
                     <p className="text-xs text-muted-foreground">
-                        {activity.habitName ? `Completou: ${activity.habitName}` : ''}
+                        {activity.habitName ? `${activity.habitName} • ` : ''}
+                        {formatDistanceToNow(activity.timestamp, { addSuffix: true, locale: ptBR })}
                     </p>
                 </div>
-                <p className="text-xs text-muted-foreground whitespace-nowrap">
-                    {formatDistanceToNow(activity.timestamp, { addSuffix: true, locale: ptBR })}
-                </p>
                  <Button variant="ghost" size="icon" className="w-8 h-8 -mr-2">
                     <MoreHorizontal className="w-4 h-4" />
                 </Button>
