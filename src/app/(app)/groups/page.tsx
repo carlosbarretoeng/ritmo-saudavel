@@ -61,8 +61,10 @@ export default function GroupsPage() {
       <div>
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-lg font-bold font-headline">Descobrir Grupos</h2>
-          <Button variant="ghost" size="icon">
+          <Button variant="ghost" size="icon" asChild>
+            <Link href="/groups/scan">
               <QrCode className="h-5 w-5 text-muted-foreground" />
+            </Link>
           </Button>
         </div>
         <div className="space-y-3">
