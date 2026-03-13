@@ -150,13 +150,13 @@ export default function DashboardPage() {
                     <p className="text-lg font-bold">{mainUser.points.toLocaleString('pt-BR')}</p>
                 </div>
                 <div className="h-8 border-l border-border"></div>
-                <div className="text-center">
-                        <div className="flex items-center justify-center gap-1 text-muted-foreground mb-1">
+                <Link href="/history" className="block p-2 -m-2 text-center text-current no-underline transition-colors rounded-md hover:bg-muted/50">
+                    <div className="flex items-center justify-center gap-1 text-muted-foreground mb-1">
                         <Flame className="w-4 h-4" />
                         <span className="text-xs font-medium">Sequência</span>
                     </div>
                     <p className="text-lg font-bold">{mainUser.currentStreak} dias</p>
-                </div>
+                </Link>
             </CardContent>
             {!hasCompletedHabits && userHabits.length > 0 && (
                 <CardFooter className="p-0 border-t">

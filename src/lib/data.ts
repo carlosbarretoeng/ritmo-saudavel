@@ -54,6 +54,17 @@ export const activityFeed: Activity[] = [
         ],
     },
     {
+        id: 'act-4',
+        user: mainUser,
+        habitName: 'Beber 2L de água',
+        text: 'Check-in de hoje feito! Mantendo a hidratação.',
+        timestamp: new Date(),
+        imageUrl: "https://picsum.photos/seed/activity4/600/800",
+        imageHint: "water bottle",
+        likes: 5,
+        comments: [],
+    },
+    {
         id: 'act-2',
         user: users[2],
         habitName: 'Meditar 5 minutos',

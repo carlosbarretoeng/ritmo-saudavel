@@ -18,6 +18,7 @@ import {
   Sparkles,
   User as UserIcon,
   LogOut,
+  CalendarDays,
 } from "lucide-react";
 import Link from "next/link";
 import { Logo } from "@/components/icons";
@@ -71,6 +72,14 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                 <Link href="/habits">
                   <Sparkles />
                   <span>Hábitos</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild tooltip="Histórico">
+                <Link href="/history">
+                  <CalendarDays />
+                  <span>Histórico</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
