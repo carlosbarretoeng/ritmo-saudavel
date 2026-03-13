@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Flame, Star, GlassWater, Book, HeartPulse, Sprout, Sunrise, Heart, MessageCircle, Send } from "lucide-react";
+import { Flame, Star, GlassWater, Book, HeartPulse, Sprout, Sunrise, Heart, MessageCircle } from "lucide-react";
 import { mainUser, habits as allHabits, activityFeed } from "@/lib/data";
 import { Habit, Activity } from "@/lib/types";
 import { formatDistanceToNow } from 'date-fns';
@@ -72,9 +72,6 @@ function ActivityPost({ activity }: { activity: Activity }) {
                     </Button>
                     <Button variant="ghost" size="icon" className="w-8 h-8 text-muted-foreground">
                         <MessageCircle className="w-5 h-5" />
-                    </Button>
-                    <Button variant="ghost" size="icon" className="w-8 h-8 text-muted-foreground">
-                        <Send className="w-5 h-5" />
                     </Button>
                 </div>
                  <p className="text-xs font-bold px-1">{activity.likes.toLocaleString()} curtidas</p>
