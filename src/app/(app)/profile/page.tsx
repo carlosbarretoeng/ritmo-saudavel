@@ -35,7 +35,7 @@ export default function ProfilePage() {
               <Button variant="outline" className="w-full">Alterar Avatar</Button>
               <div className="flex items-center justify-between text-sm">
                   <span className="text-muted-foreground flex items-center gap-2"><Star className="w-4 h-4 text-amber-500" /> Pontos</span>
-                  <span className="font-bold">{mainUser.points.toLocaleString()}</span>
+                  <span className="font-bold">{mainUser.points.toLocaleString('pt-BR')}</span>
               </div>
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-muted-foreground flex items-center gap-2"><Flame className="w-4 h-4 text-orange-500" /> Sequência Atual</span>

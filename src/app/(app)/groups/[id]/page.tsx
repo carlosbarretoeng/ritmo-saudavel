@@ -108,7 +108,7 @@ export default function GroupDetailPage({ params }: { params: { id: string } }) 
                         <p className="font-medium">{member.user.name}</p>
                       </div>
                       <div className="text-sm font-mono text-right">
-                        <span className="font-bold">{member.points.toLocaleString()}</span>
+                        <span className="font-bold">{member.points.toLocaleString('pt-BR')}</span>
                         <span className="text-muted-foreground"> pts</span>
                       </div>
                     </div>

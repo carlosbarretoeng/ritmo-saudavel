@@ -67,7 +67,7 @@ function ActivityPost({ activity }: { activity: Activity }) {
                         <Heart className="w-5 h-5" />
                     </Button>
                 </div>
-                 <p className="text-xs font-bold px-1">{activity.likes.toLocaleString()} curtidas</p>
+                 <p className="text-xs font-bold px-1">{activity.likes.toLocaleString('pt-BR')} curtidas</p>
                  <div className="text-sm px-1 space-y-1">
                     <p>
                         <span className="font-bold">{activity.user.name}</span>{' '}
@@ -111,7 +111,7 @@ export default function DashboardPage() {
                         <Star className="w-4 h-4" />
                         <span className="text-xs font-medium">Pontos</span>
                     </div>
-                    <p className="text-lg font-bold">{mainUser.points.toLocaleString()}</p>
+                    <p className="text-lg font-bold">{mainUser.points.toLocaleString('pt-BR')}</p>
                 </div>
                 <div className="h-8 border-l border-border"></div>
                 <div className="text-center">
