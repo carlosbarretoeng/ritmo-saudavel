@@ -15,12 +15,19 @@ export default function GroupsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold font-headline">Grupos</h1>
-        <Button size="sm" asChild>
-          <Link href="/groups/create">
-            <Plus className="mr-2 h-4 w-4" />
-            Criar
-          </Link>
-        </Button>
+        <div className="flex items-center gap-2">
+            <Button variant="outline" size="icon" className="h-9 w-9" asChild>
+                <Link href="/groups/scan">
+                    <QrCode className="h-4 w-4" />
+                </Link>
+            </Button>
+            <Button size="sm" asChild>
+              <Link href="/groups/create">
+                <Plus className="mr-2 h-4 w-4" />
+                Criar
+              </Link>
+            </Button>
+        </div>
       </div>
       
       <p className="text-muted-foreground">
@@ -61,11 +68,6 @@ export default function GroupsPage() {
       <div>
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-lg font-bold font-headline">Descobrir Grupos</h2>
-          <Button variant="ghost" size="icon" asChild>
-            <Link href="/groups/scan">
-              <QrCode className="h-5 w-5 text-muted-foreground" />
-            </Link>
-          </Button>
         </div>
         <div className="space-y-3">
           {availableGroups.map((group) => (
