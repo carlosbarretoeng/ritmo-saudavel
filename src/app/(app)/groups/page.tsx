@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
 } from "@/components/ui/card";
-import { Plus, Users, ChevronRight } from "lucide-react";
+import { Plus, Users, ChevronRight, QrCode } from "lucide-react";
 import { groups, mainUser } from "@/lib/data";
 
 export default function GroupsPage() {
@@ -59,7 +59,12 @@ export default function GroupsPage() {
       </div>
 
       <div>
-        <h2 className="text-lg font-bold font-headline mb-3">Descobrir Grupos</h2>
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="text-lg font-bold font-headline">Descobrir Grupos</h2>
+          <Button variant="ghost" size="icon">
+              <QrCode className="h-5 w-5 text-muted-foreground" />
+          </Button>
+        </div>
         <div className="space-y-3">
           {availableGroups.map((group) => (
             <Card key={group.id} className="p-3 flex items-center gap-4">
