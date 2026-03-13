@@ -37,7 +37,7 @@ export default function HistoryPage() {
       </div>
       
       <Card>
-          <CardContent className="p-0 md:p-4">
+          <CardContent className="p-0 md:p-4 flex justify-center">
             <Calendar
                 mode="single"
                 selected={date}
