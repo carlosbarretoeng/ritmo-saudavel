@@ -1,17 +1,22 @@
 'use client';
 
 import { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { systemHabits, userHabitConfigs as initialUserHabitConfigs } from '@/lib/data';
 import { habitIcons } from '@/lib/icons';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
 import type { UserHabitConfig } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
 import { useLoading } from '@/contexts/loading-context';
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+} from "@/components/ui/accordion";
 
 export default function HabitsPage() {
   const [configs, setConfigs] = useState<UserHabitConfig[]>(initialUserHabitConfigs);
@@ -28,7 +33,7 @@ export default function HabitsPage() {
 
   const handleGoalChange = (habitId: string, goal: string) => {
     const newGoal = parseFloat(goal);
-    if (!isNaN(newGoal)) {
+    if (!isNaN(newGoal) && newGoal >= 0) {
       setConfigs((prev) =>
         prev.map((config) =>
           config.habitId === habitId ? { ...config, goal: newGoal } : config
@@ -70,58 +75,74 @@ export default function HabitsPage() {
             <Button onClick={handleSaveChanges} className="w-full sm:w-auto">Salvar Alterações</Button>
         </div>
 
-        {Object.entries(groupedHabits).map(([category, habits]) => (
-            <div key={category}>
-                <h2 className="text-lg font-bold font-headline mb-3 px-1">{category}</h2>
-                <Card>
-                <CardContent className="p-4 space-y-4">
-                    {habits.map((habit) => {
-                        const Icon = habitIcons[habit.icon] || habitIcons['Star'];
-                        const config = configs.find(c => c.habitId === habit.id);
+        <Accordion type="multiple" defaultValue={Object.keys(groupedHabits)} className="w-full space-y-4">
+            {Object.entries(groupedHabits).map(([category, habits]) => {
+                const totalHabits = habits.length;
+                const activeHabits = habits.filter(habit => 
+                    configs.find(c => c.habitId === habit.id)?.isEnabled
+                ).length;
 
-                        if (!config) return null;
-
-                        return (
-                            <div key={habit.id} className="p-2 -mx-2 rounded-lg hover:bg-muted/50 transition-colors">
-                                <div className="flex items-center gap-4">
-                                    <Icon className="w-8 h-8 text-primary shrink-0" />
-                                    <div className="flex-grow">
-                                    <p className="font-bold">{habit.name}</p>
-                                    <p className="text-sm text-muted-foreground">
-                                        {habit.type === 'metric' 
-                                            ? `Meta: ${config.goal} ${habit.unit}` 
-                                            : 'Check-in diário'}
-                                    </p>
-                                    </div>
-                                    <Switch
-                                        checked={config.isEnabled}
-                                        onCheckedChange={(checked) => handleToggle(habit.id, checked)}
-                                        aria-label={`Ativar ${habit.name}`}
-                                    />
+                return (
+                    <AccordionItem key={category} value={category} className="rounded-lg border bg-card text-card-foreground shadow-sm">
+                        <AccordionTrigger className="p-4 text-lg font-bold font-headline hover:no-underline data-[state=open]:border-b">
+                            <div className="flex justify-between w-full items-center">
+                                <span className="pr-2">{category}</span>
+                                <div className="flex items-center gap-2">
+                                <span className="text-sm font-medium text-muted-foreground">
+                                    {activeHabits} / {totalHabits} ativos
+                                </span>
                                 </div>
-                                {config.isEnabled && habit.type === 'metric' && (
-                                <div className="mt-4 sm:pl-12">
-                                    <Label htmlFor={`goal-${habit.id}`} className="text-xs font-medium text-muted-foreground">Definir nova meta diária</Label>
-                                    <div className="flex items-center gap-2 mt-1">
-                                        <Input
-                                            id={`goal-${habit.id}`}
-                                            type="number"
-                                            value={config.goal}
-                                            onChange={(e) => handleGoalChange(habit.id, e.target.value)}
-                                            className="h-9 max-w-[100px]"
-                                            min="0"
-                                        />
-                                        <span className="text-sm font-medium text-muted-foreground">{habit.unit}</span>
-                                    </div>
-                                </div>
-                                )}
                             </div>
-                        );
-                    })}
-                </CardContent>
-                </Card>
-            </div>
-        ))}
+                        </AccordionTrigger>
+                        <AccordionContent className="p-4 space-y-4">
+                            {habits.map((habit) => {
+                                const Icon = habitIcons[habit.icon] || habitIcons['Star'];
+                                const config = configs.find(c => c.habitId === habit.id);
+
+                                if (!config) return null;
+
+                                return (
+                                    <div key={habit.id} className="p-2 -mx-2 rounded-lg hover:bg-muted/50 transition-colors">
+                                        <div className="flex items-center gap-4">
+                                            <Icon className="w-8 h-8 text-primary shrink-0" />
+                                            <div className="flex-grow">
+                                            <p className="font-bold">{habit.name}</p>
+                                            <p className="text-sm text-muted-foreground">
+                                                {habit.type === 'metric' 
+                                                    ? `Meta: ${config.goal} ${habit.unit}` 
+                                                    : 'Check-in diário'}
+                                            </p>
+                                            </div>
+                                            <Switch
+                                                checked={config.isEnabled}
+                                                onCheckedChange={(checked) => handleToggle(habit.id, checked)}
+                                                aria-label={`Ativar ${habit.name}`}
+                                            />
+                                        </div>
+                                        {config.isEnabled && habit.type === 'metric' && (
+                                        <div className="mt-4 sm:pl-12">
+                                            <Label htmlFor={`goal-${habit.id}`} className="text-xs font-medium text-muted-foreground">Definir nova meta diária</Label>
+                                            <div className="flex items-center gap-2 mt-1">
+                                                <Input
+                                                    id={`goal-${habit.id}`}
+                                                    type="number"
+                                                    value={config.goal}
+                                                    onChange={(e) => handleGoalChange(habit.id, e.target.value)}
+                                                    className="h-9 max-w-[100px]"
+                                                    min="0"
+                                                />
+                                                <span className="text-sm font-medium text-muted-foreground">{habit.unit}</span>
+                                            </div>
+                                        </div>
+                                        )}
+                                    </div>
+                                );
+                            })}
+                        </AccordionContent>
+                    </AccordionItem>
+                )
+            })}
+        </Accordion>
     </div>
   );
 }
