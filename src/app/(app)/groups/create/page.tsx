@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Camera, ArrowLeft } from 'lucide-react';
-import { habits as allHabits } from '@/lib/data';
+import { habits as allHabits, mainUser } from '@/lib/data';
 import { Checkbox } from '@/components/ui/checkbox';
 
 export default function CreateGroupPage() {
@@ -19,6 +19,8 @@ export default function CreateGroupPage() {
   const [groupIcon, setGroupIcon] = useState<string | null>(null);
   const [groupObjective, setGroupObjective] = useState('');
   const [selectedHabits, setSelectedHabits] = useState<string[]>([]);
+
+  const userHabits = allHabits.filter((habit) => mainUser.habits.includes(habit.id));
 
   const handleCreateGroup = () => {
     // Logic to create the group would go here
@@ -106,7 +108,7 @@ export default function CreateGroupPage() {
             <div className="space-y-4">
                 <Label>Hábitos em Comum (Opcional)</Label>
                 <div className="space-y-3 rounded-md border p-4 bg-muted/50">
-                    {allHabits.slice(0, 4).map((habit) => (
+                    {userHabits.map((habit) => (
                         <div key={habit.id} className="flex items-center gap-3">
                             <Checkbox
                                 id={`habit-${habit.id}`}
