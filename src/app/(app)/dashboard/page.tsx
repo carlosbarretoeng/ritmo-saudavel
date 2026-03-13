@@ -84,11 +84,13 @@ function ActivityPost({ activity }: { activity: Activity }) {
                      </Button>
                  </div>
                  {showCommentInput && (
-                    <div className="relative w-full pt-2">
-                        <Input placeholder="Adicione um comentário..." className="pr-10 text-sm" />
-                        <Button size="icon" className="absolute top-1/2 right-1 -translate-y-1/2 h-8 w-8" variant="ghost">
-                            <Send className="h-4 w-4" />
-                        </Button>
+                    <div className="w-full pt-2">
+                      <div className="relative">
+                          <Input placeholder="Adicione um comentário..." className="pr-10 text-sm" />
+                          <Button size="icon" className="absolute top-1/2 right-1 -translate-y-1/2 h-8 w-8" variant="ghost">
+                              <Send className="h-4 w-4" />
+                          </Button>
+                      </div>
                     </div>
                  )}
             </CardFooter>
