@@ -33,13 +33,13 @@ body {
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
-    --sidebar-background: 90 10% 12%;
-    --sidebar-foreground: 90 20% 95%;
+    --sidebar-background: 86 43% 97%;
+    --sidebar-foreground: 90 10% 20%;
     --sidebar-primary: 93 61% 51%;
     --sidebar-primary-foreground: 93 60% 98%;
-    --sidebar-accent: 90 10% 20%;
-    --sidebar-accent-foreground: 90 20% 95%;
-    --sidebar-border: 90 10% 25%;
+    --sidebar-accent: 90 20% 90%;
+    --sidebar-accent-foreground: 90 10% 20%;
+    --sidebar-border: 90 20% 88%;
     --sidebar-ring: 93 61% 51%;
   }
   .dark {
