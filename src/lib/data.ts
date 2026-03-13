@@ -1,4 +1,4 @@
-import type { User, Habit, Group, LeaderboardEntry, AppUser, GroupWithMembers, ChatMessage, Activity, HabitIdea } from './types';
+import type { User, Habit, Group, AppUser, GroupWithMembers, ChatMessage, Activity, HabitIdea } from './types';
 import { placeholderImages as allPlaceholderImages } from './placeholder-images';
 
 export const placeholderImages = allPlaceholderImages;
@@ -97,11 +97,3 @@ export const groupChatMessages: ChatMessage[] = [
     { id: 'msg-3', userId: 'user-5', userName: 'Você', userAvatarUrl: mainUser.avatarUrl, text: 'Boa! Eu vou mais tarde. Alguém tem dica de playlist?', timestamp: new Date(Date.now() - 1000 * 60 * 30) },
     { id: 'msg-4', userId: 'user-1', userName: users[0].name, userAvatarUrl: users[0].avatarUrl, text: 'Acabei de compartilhar uma ótima no nosso feed!', timestamp: new Date(Date.now() - 1000 * 60 * 20) },
 ]
-
-export const groupLeaderboard: LeaderboardEntry[] = [
-  { rank: 1, group: groups[0], totalPoints: 45200, memberCount: 12 },
-  { rank: 2, group: {id: 'group-4', name: 'Yoga Masters', description: 'Paz e flexibilidade.', memberCount: 15, iconUrl: 'https://picsum.photos/seed/group4/200/200', objective: 'Praticar yoga diariamente', commonHabits: []}, totalPoints: 42100, memberCount: 15 },
-  { rank: 3, group: groups[1], totalPoints: 38900, memberCount: 8 },
-  { rank: 4, group: {id: 'group-5', name: 'Foodies Saudáveis', description: 'Comida boa e saudável.', memberCount: 18, iconUrl: 'https://picsum.photos/seed/group5/200/200', objective: 'Compartilhar uma receita saudável por semana', commonHabits: []}, totalPoints: 35500, memberCount: 18 },
-  { rank: 5, group: groups[2], totalPoints: 32000, memberCount: 25 },
-];

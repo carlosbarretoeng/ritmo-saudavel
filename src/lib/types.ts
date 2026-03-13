@@ -34,14 +34,6 @@ export type GroupWithMembers = Group & {
     members: GroupMember[];
 }
 
-
-export type LeaderboardEntry = {
-  rank: number;
-  group: Group;
-  totalPoints: number;
-  memberCount: number;
-};
-
 export type AppUser = User & {
   email: string;
   points: number;
