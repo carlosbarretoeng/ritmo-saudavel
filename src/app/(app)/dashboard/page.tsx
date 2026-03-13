@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -36,6 +36,12 @@ function PendingHabitCheckin({ habit }: { habit: Habit }) {
 function ActivityPost({ activity }: { activity: Activity }) {
     const [showCommentInput, setShowCommentInput] = useState(false);
     const [showAllComments, setShowAllComments] = useState(false);
+    const [isClient, setIsClient] = useState(false);
+
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
+
 
     return (
         <Card className="overflow-hidden">
@@ -48,7 +54,7 @@ function ActivityPost({ activity }: { activity: Activity }) {
                     <p className="font-bold text-sm">{activity.user.name}</p>
                     <p className="text-xs text-muted-foreground">
                         {activity.habitName ? `${activity.habitName} • ` : ''}
-                        {formatDistanceToNow(activity.timestamp, { addSuffix: true, locale: ptBR })}
+                        {isClient ? formatDistanceToNow(activity.timestamp, { addSuffix: true, locale: ptBR }) : null}
                     </p>
                 </div>
             </CardHeader>

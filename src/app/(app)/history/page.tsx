@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calendar } from '@/components/ui/calendar';
 import { mainUser, activityFeed, habits } from '@/lib/data';
@@ -11,10 +11,15 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { habitIcons } from '@/lib/icons';
 
 export default function HistoryPage() {
-  const [date, setDate] = useState<Date | undefined>(new Date());
+  const [date, setDate] = useState<Date | undefined>(undefined);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setDate(new Date());
+    setIsClient(true);
+  }, []);
 
   const userActivities = activityFeed.filter(a => {
-    const activityDate = new Date(a.timestamp);
     // Include activities from the user and where the user commented
     return a.user.id === mainUser.id;
   });
@@ -54,7 +59,7 @@ export default function HistoryPage() {
 
        <div className="space-y-4">
             <h2 className="font-bold text-md px-1">
-                Atividades de {date ? format(date, "dd 'de' MMMM", { locale: ptBR }) : 'Hoje'}
+                Atividades de {date && isClient ? format(date, "dd 'de' MMMM", { locale: ptBR }) : 'Hoje'}
             </h2>
             {selectedActivities.length > 0 ? (
                  selectedActivities.map(activity => {
@@ -71,7 +76,7 @@ export default function HistoryPage() {
                                     <p className="font-bold text-sm">{activity.user.name}</p>
                                     <p className="text-xs text-muted-foreground">
                                         {activity.habitName && `${activity.habitName} • `}
-                                        {format(activity.timestamp, "dd/MM/yy 'às' HH:mm", { locale: ptBR })}
+                                        {isClient ? format(activity.timestamp, "dd/MM/yy 'às' HH:mm", { locale: ptBR }) : null}
                                     </p>
                                 </div>
                                 {HabitIcon && <HabitIcon className="w-6 h-6 text-muted-foreground" />}
