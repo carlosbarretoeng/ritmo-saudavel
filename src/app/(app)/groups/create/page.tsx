@@ -94,7 +94,7 @@ export default function CreateGroupPage() {
             </div>
             
             <div className="space-y-2">
-                <Label htmlFor="group-objective">Objetivo Tangível (Opcional)</Label>
+                <Label htmlFor="group-objective">Objetivo do Grupo</Label>
                 <Input
                 id="group-objective"
                 placeholder="Ex: Correr 100km em um mês"
