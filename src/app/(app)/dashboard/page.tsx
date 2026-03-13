@@ -12,12 +12,13 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Flame, Star, Heart, MessageCircle, PartyPopper } from "lucide-react";
+import { Flame, Star, Heart, MessageCircle, PartyPopper, Send } from "lucide-react";
 import { mainUser, habits as allHabits, activityFeed } from "@/lib/data";
 import { Habit, Activity } from "@/lib/types";
 import { formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { habitIcons } from '@/lib/icons';
+import { Input } from '@/components/ui/input';
 
 
 function PendingHabitCheckin({ habit }: { habit: Habit }) {
@@ -33,6 +34,8 @@ function PendingHabitCheckin({ habit }: { habit: Habit }) {
 }
 
 function ActivityPost({ activity }: { activity: Activity }) {
+    const [showCommentInput, setShowCommentInput] = useState(false);
+
     return (
         <Card className="overflow-hidden">
             <CardHeader className="flex flex-row items-center gap-3 p-3">
@@ -66,6 +69,9 @@ function ActivityPost({ activity }: { activity: Activity }) {
                      <Button variant="ghost" size="icon" className="w-8 h-8 text-muted-foreground hover:text-red-500">
                         <Heart className="w-5 h-5" />
                     </Button>
+                    <Button variant="ghost" size="icon" className="w-8 h-8 text-muted-foreground" onClick={() => setShowCommentInput(!showCommentInput)}>
+                        <MessageCircle className="w-5 h-5" />
+                    </Button>
                 </div>
                  <p className="text-xs font-bold px-1">{activity.likes.toLocaleString('pt-BR')} curtidas</p>
                  <div className="text-sm px-1 space-y-1">
@@ -77,6 +83,14 @@ function ActivityPost({ activity }: { activity: Activity }) {
                         Ver todos os {activity.comments} comentários
                      </Button>
                  </div>
+                 {showCommentInput && (
+                    <div className="relative w-full pt-2">
+                        <Input placeholder="Adicione um comentário..." className="pr-10 text-sm" />
+                        <Button size="icon" className="absolute top-1/2 right-1 -translate-y-1/2 h-8 w-8" variant="ghost">
+                            <Send className="h-4 w-4" />
+                        </Button>
+                    </div>
+                 )}
             </CardFooter>
         </Card>
     )
