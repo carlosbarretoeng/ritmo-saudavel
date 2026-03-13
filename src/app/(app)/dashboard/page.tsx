@@ -165,6 +165,8 @@ export default function DashboardPage() {
   const todaysUserActivities = activityFeed.filter(
     (a) => a.user.id === mainUser.id && isToday(a.timestamp)
   );
+  
+  const hasAnyActivityToday = todaysUserActivities.length > 0;
 
   const pendingHabits = enabledHabits.filter(habit => {
     const config = enabledHabitConfigs.find(c => c.habitId === habit.id);
@@ -223,7 +225,7 @@ export default function DashboardPage() {
                     <p className="text-lg font-bold">{mainUser.currentStreak} dias</p>
                 </Link>
             </CardContent>
-            {!hasCompletedAllHabits && hasEnabledHabits && (
+            {!hasCompletedAllHabits && hasEnabledHabits && !hasAnyActivityToday && (
                 <CardFooter className="p-0 border-t">
                     <Button variant="ghost" className="w-full rounded-t-none text-muted-foreground" onClick={() => setIsFreeDay(true)}>
                         Tirar um dia livre
