@@ -13,7 +13,6 @@ export type Habit = {
   icon: string; // Corresponds to a lucide-react icon name
   type: 'metric' | 'boolean';
   category: string;
-  defaultGoal?: number;
   unit?: string;
   information?: string;
 };

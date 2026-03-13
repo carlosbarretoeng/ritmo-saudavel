@@ -27,9 +27,9 @@ export const mainUser: AppUser = {
 };
 
 export const systemHabits: Habit[] = [
-  { id: 'habit-1', name: 'Beber Água', icon: 'GlassWater', type: 'metric', category: 'Saúde', defaultGoal: 2, unit: 'L', information: 'A recomendação geral é de 2 litros por dia, mas pode variar. (fonte: https://bit.ly/agua-info)' },
-  { id: 'habit-2', name: 'Correr', icon: 'Flame', type: 'metric', category: 'Fitness', defaultGoal: 30, unit: 'min', information: 'A OMS indica 40 minutos de exercícios físicos por semana. (fonte: https://bit.ly/oms-exercicios)' },
-  { id: 'habit-3', name: 'Ler', icon: 'Book', type: 'metric', category: 'Desenvolvimento', defaultGoal: 15, unit: 'pág' },
+  { id: 'habit-1', name: 'Beber Água', icon: 'GlassWater', type: 'metric', category: 'Saúde', unit: 'L', information: 'A recomendação geral é de 2 litros por dia, mas pode variar. (fonte: https://bit.ly/agua-info)' },
+  { id: 'habit-2', name: 'Correr', icon: 'Flame', type: 'metric', category: 'Fitness', unit: 'min', information: 'A OMS indica 40 minutos de exercícios físicos por semana. (fonte: https://bit.ly/oms-exercicios)' },
+  { id: 'habit-3', name: 'Ler', icon: 'Book', type: 'metric', category: 'Desenvolvimento', unit: 'pág' },
   { id: 'habit-4', name: 'Meditar', icon: 'HeartPulse', type: 'boolean', category: 'Bem-estar', information: 'Meditar por 10 minutos pode melhorar o foco e reduzir o estresse. (fonte: https://bit.ly/meditacao-beneficios)' },
   { id: 'habit-5', name: 'Acordar Cedo', icon: 'Sunrise', type: 'boolean', category: 'Produtividade' },
   { id: 'habit-6', name: 'Alongar', icon: 'Sprout', type: 'boolean', category: 'Fitness' },
