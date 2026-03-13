@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { systemHabits, userHabitConfigs as initialUserHabitConfigs } from '@/lib/data';
@@ -17,6 +17,41 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Info } from 'lucide-react';
+
+const InformationText = ({ text }: { text: string }) => {
+    const urlRegex = /(\(fonte: https?:\/\/[^\s)]+\))/g;
+    const urlExtractRegex = /\(fonte: (https?:\/\/[^\s)]+)\)/;
+    
+    const parts = text.split(urlRegex);
+  
+    return (
+      <>
+        {parts.map((part, i) => {
+          const match = part.match(urlExtractRegex);
+          if (match) {
+            const url = match[1];
+            return (
+              <React.Fragment key={i}>
+                (
+                <a
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary underline hover:text-primary/80"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  fonte
+                </a>
+                )
+              </React.Fragment>
+            );
+          }
+          return part;
+        })}
+      </>
+    );
+};
 
 export default function HabitsPage() {
   const [configs, setConfigs] = useState<UserHabitConfig[]>(initialUserHabitConfigs);
@@ -119,6 +154,16 @@ export default function HabitsPage() {
                                                 aria-label={`Ativar ${habit.name}`}
                                             />
                                         </div>
+
+                                        {habit.information && (
+                                            <div className="mt-3 flex items-start gap-2 text-xs text-muted-foreground bg-muted/50 p-3 rounded-lg">
+                                                <Info className="w-4 h-4 shrink-0 mt-0.5" />
+                                                <p className="flex-1 leading-relaxed">
+                                                    <InformationText text={habit.information} />
+                                                </p>
+                                            </div>
+                                        )}
+
                                         {config.isEnabled && habit.type === 'metric' && (
                                         <div className="mt-4 sm:pl-12">
                                             <Label htmlFor={`goal-${habit.id}`} className="text-xs font-medium text-muted-foreground">Definir nova meta diária</Label>

@@ -15,6 +15,7 @@ export type Habit = {
   category: string;
   defaultGoal?: number;
   unit?: string;
+  information?: string;
 };
 
 export type UserHabitConfig = {
