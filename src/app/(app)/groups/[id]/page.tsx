@@ -1,7 +1,7 @@
 'use client';
 
 import Image from "next/image";
-import { notFound } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 import { useState } from 'react';
 import {
   Card,
@@ -26,8 +26,10 @@ import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 
 
-export default function GroupDetailPage({ params }: { params: { id: string } }) {
-  const group = groupDetails.find((g) => g.id === params.id);
+export default function GroupDetailPage() {
+  const params = useParams();
+  const id = params.id as string;
+  const group = groupDetails.find((g) => g.id === id);
   const [isFlipped, setIsFlipped] = useState(false);
   const { toast } = useToast();
 
