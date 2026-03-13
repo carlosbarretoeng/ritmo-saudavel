@@ -1,3 +1,5 @@
+'use client';
+
 import {
   SidebarProvider,
   Sidebar,
@@ -23,13 +25,17 @@ import {
 import Link from "next/link";
 import { Logo } from "@/components/icons";
 import { mainUser } from "@/lib/data";
+import { useLoading } from "@/contexts/loading-context";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
+  const { setIsLoading } = useLoading();
+  const handleNavClick = () => setIsLoading(true);
+
   return (
     <SidebarProvider>
       <Sidebar>
         <SidebarHeader>
-          <Link href="/dashboard" className="flex items-center gap-2">
+          <Link href="/dashboard" className="flex items-center gap-2" onClick={handleNavClick}>
             <Logo className="w-7 h-7 text-sidebar-primary" />
             <span className="text-lg font-semibold font-headline tracking-tighter group-data-[collapsible=icon]:hidden">
               Ritmo Saudável
@@ -38,7 +44,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         </SidebarHeader>
         <SidebarContent>
            <div className="p-2">
-            <Link href="/profile" className="flex items-center gap-3 p-2 rounded-md hover:bg-sidebar-accent">
+            <Link href="/profile" className="flex items-center gap-3 p-2 rounded-md hover:bg-sidebar-accent" onClick={handleNavClick}>
               <Avatar className="w-9 h-9">
                 <AvatarImage src={mainUser.avatarUrl} alt={mainUser.name} />
                 <AvatarFallback>{mainUser.name.charAt(0)}</AvatarFallback>
@@ -53,7 +59,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton asChild tooltip="Dashboard">
-                <Link href="/dashboard">
+                <Link href="/dashboard" onClick={handleNavClick}>
                   <LayoutDashboard />
                   <span>Dashboard</span>
                 </Link>
@@ -61,7 +67,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             </SidebarMenuItem>
             <SidebarMenuItem>
               <SidebarMenuButton asChild tooltip="Grupos">
-                <Link href="/groups">
+                <Link href="/groups" onClick={handleNavClick}>
                   <Users />
                   <span>Grupos</span>
                 </Link>
@@ -69,7 +75,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             </SidebarMenuItem>
             <SidebarMenuItem>
               <SidebarMenuButton asChild tooltip="Hábitos">
-                <Link href="/habits">
+                <Link href="/habits" onClick={handleNavClick}>
                   <Sparkles />
                   <span>Hábitos</span>
                 </Link>
@@ -77,7 +83,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             </SidebarMenuItem>
             <SidebarMenuItem>
               <SidebarMenuButton asChild tooltip="Histórico">
-                <Link href="/history">
+                <Link href="/history" onClick={handleNavClick}>
                   <CalendarDays />
                   <span>Histórico</span>
                 </Link>
@@ -85,7 +91,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             </SidebarMenuItem>
             <SidebarMenuItem>
               <SidebarMenuButton asChild tooltip="Perfil">
-                <Link href="/profile">
+                <Link href="/profile" onClick={handleNavClick}>
                   <UserIcon />
                   <span>Perfil</span>
                 </Link>
@@ -97,7 +103,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           <SidebarMenu>
              <SidebarMenuItem>
               <SidebarMenuButton asChild tooltip="Sair">
-                <Link href="/">
+                <Link href="/" onClick={handleNavClick}>
                   <LogOut />
                   <span>Sair</span>
                 </Link>

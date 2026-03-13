@@ -3,9 +3,17 @@
 import { useLoading } from '@/contexts/loading-context';
 import { Loader } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { useEffect } from 'react';
 
 export function GlobalLoader() {
-  const { isLoading } = useLoading();
+  const { isLoading, setIsLoading } = useLoading();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, [pathname, searchParams, setIsLoading]);
 
   return (
     <div
