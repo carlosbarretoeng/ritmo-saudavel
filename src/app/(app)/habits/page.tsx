@@ -75,7 +75,7 @@ export default function HabitsPage() {
             <Button onClick={handleSaveChanges} className="w-full sm:w-auto">Salvar Alterações</Button>
         </div>
 
-        <Accordion type="multiple" defaultValue={Object.keys(groupedHabits)} className="w-full space-y-4">
+        <Accordion type="single" collapsible className="w-full space-y-4">
             {Object.entries(groupedHabits).map(([category, habits]) => {
                 const totalHabits = habits.length;
                 const activeHabits = habits.filter(habit => 
